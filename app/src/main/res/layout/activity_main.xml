@@ -4,30 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
     tools:context=".MainActivity">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
-    <LinearLayout
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            app:icon="@drawable/ic_baseline_view_headline_24"
-            android:backgroundTint="@color/colorPrimary"
-            app:iconGravity="textStart"
-            app:iconPadding="20dp"/>
-
-        <TextView
-            android:id="@+id/mainScreenText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="EmpleLoja Agricola"
-            android:textSize="35dp" />
-    </LinearLayout>
 
 </RelativeLayout>

@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.sql.SQLException;
+
 public class LogInScreen extends AppCompatActivity {
     private TextView username;
 
@@ -17,6 +19,8 @@ public class LogInScreen extends AppCompatActivity {
     private Button logInButton;
 
     private Button signUpActivityButton;
+
+    ConnectionDB connectionDB = new ConnectionDB();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,13 @@ public class LogInScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // if(username.getText().toString().equals("admin"))
+                try {
+                    connectionDB.connection();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
                 logIn();
             }
         });
