@@ -1,15 +1,11 @@
 package com.aureliohernandez.EmpleLoja_Agricola;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import java.sql.SQLException;
 
 public class LogInScreen extends AppCompatActivity {
     private TextView username;
@@ -19,8 +15,6 @@ public class LogInScreen extends AppCompatActivity {
     private Button logInButton;
 
     private Button signUpActivityButton;
-
-    ConnectionDB connectionDB = new ConnectionDB();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +31,6 @@ public class LogInScreen extends AppCompatActivity {
         logInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // if(username.getText().toString().equals("admin"))
-                try {
-                    connectionDB.connection();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
                 logIn();
             }
         });
@@ -54,6 +40,7 @@ public class LogInScreen extends AppCompatActivity {
         signUpActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 signUpActivity();
             }
         });
@@ -69,4 +56,6 @@ public class LogInScreen extends AppCompatActivity {
         Intent intent = new Intent(this, SignUpScreen.class);
         startActivity(intent);
     }
-}
+
+
+    }

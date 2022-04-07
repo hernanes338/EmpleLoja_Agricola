@@ -40,7 +40,7 @@
         android:textColorHint="#D3D3D3" />
 
     <EditText
-        android:id="@+id/lastName"
+        android:id="@+id/surname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/name"
@@ -61,7 +61,7 @@
         android:id="@+id/phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lastName"
+        android:layout_below="@+id/surname"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
@@ -145,6 +145,7 @@
         android:textStyle="bold" />
 
     <RadioGroup
+        android:id="@+id/radioGroupRole"
         android:layout_width="275dp"
         android:layout_height="40dp"
         android:layout_above="@+id/signUpButton"
