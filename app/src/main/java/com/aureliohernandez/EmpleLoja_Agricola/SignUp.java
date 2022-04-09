@@ -2,14 +2,18 @@ package com.aureliohernandez.EmpleLoja_Agricola;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -34,6 +38,13 @@ public class SignUp extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_screen);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        // showing the back button in action bar
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Introduzca sus datos");
+
         nameField = (EditText) findViewById(R.id.name);
         surnameField = (EditText) findViewById(R.id.surname);
         phoneField = (EditText) findViewById(R.id.phone);
@@ -70,6 +81,18 @@ public class SignUp extends AppCompatActivity {
 
     }
 
+    // this event will enable the back
+    // function to the button on press
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                toLogInScreen();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void signUp() {
         name = nameField.getText().toString().trim();
         surname = surnameField.getText().toString().trim();
@@ -80,16 +103,16 @@ public class SignUp extends AppCompatActivity {
 
         if (!name.equals("") && !surname.equals("") && !phone.equals("") && !email.equals("") && !password.equals("") && !repassword.equals("") && !role.equals("")) {
             if(!password.equals(repassword)) {
-                Toast.makeText(SignUp.this, "La contrasena no coincide", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUp.this, "La contraseña no coincide", Toast.LENGTH_SHORT).show();
             } else {
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         if (response.equals("success")) {
-                            Toast.makeText(SignUp.this, "Cuenta creada", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignUp.this, "Cuenta de usuario creada", Toast.LENGTH_SHORT).show();
                             toLogInScreen();
                         } else if (response.equals("failure")) {
-                            Toast.makeText(SignUp.this, "La cuenta no pudo ser creada", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignUp.this, "La cuenta de usuario no ha sido creada", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -114,7 +137,7 @@ public class SignUp extends AppCompatActivity {
                 requestQueue.add(stringRequest);
             }
         } else{
-            Toast.makeText(this, "Fields can not be empty!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
         }
 
 

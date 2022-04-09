@@ -76,15 +76,13 @@ import java.util.Map;
                     public void onResponse(String response) {
                         Log.d("res", response);
                         if (response.equals("success")) {
-                            Toast.makeText(LogIn.this, "Log in Successful", Toast.LENGTH_SHORT).show();
                             SharedPreferences sharedPref = getSharedPreferences("LogIn", Context.MODE_PRIVATE);
                             SharedPreferences.Editor edit = sharedPref.edit();
                             edit.putBoolean("loginStatus", true);
                             edit.commit();
-                            Toast.makeText(getApplicationContext(), "Se ha almacenado la configuracion", Toast.LENGTH_SHORT).show();
                             toMainActivity();
                         } else if (response.equals("failure")) {
-                            Toast.makeText(getApplicationContext(), "Invalid Login Id/Password", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Correo electrónico o contraseña incorrectos", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -104,7 +102,7 @@ import java.util.Map;
                 RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
                 requestQueue.add(stringRequest);
             }else{
-                Toast.makeText(this, "Fields can not be empty!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
             }
         }
 
