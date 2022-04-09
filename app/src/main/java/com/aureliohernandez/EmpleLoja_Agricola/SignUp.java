@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SignUp extends AppCompatActivity {
-    private String URL = "http://192.168.0.15/EmpleLoja_Agricola/Volley/signup.php";
+    private String URL = "http://192.168.0.15/EmpleLoja_Agricola/php_scripts/signup.php";
     private EditText nameField, surnameField, phoneField, emailField, passwordField, repasswordField;
     private String name, surname, phone, email, password, repassword, role;
     private RadioGroup roleField;

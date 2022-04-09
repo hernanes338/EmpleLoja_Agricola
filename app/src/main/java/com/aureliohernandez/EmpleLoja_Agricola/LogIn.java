@@ -1,6 +1,8 @@
 package com.aureliohernandez.EmpleLoja_Agricola;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,7 +26,7 @@ import java.util.Map;
 
     public class LogIn extends AppCompatActivity {
 
-        private final String URL = "http://192.168.0.15/EmpleLoja_Agricola/Volley/login.php";
+        private final String URL = "http://192.168.0.15/EmpleLoja_Agricola/php_scripts/login.php";
         private EditText emailField, passwordField;
         private String email, password;
         private Button logInButton, signupButton;
@@ -34,6 +36,12 @@ import java.util.Map;
             setTheme(R.style.Theme_EmpleLojaAgricola);
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_log_in_screen);
+            SharedPreferences sharedPref = getSharedPreferences("LogIn", Context.MODE_PRIVATE);
+            Boolean loginStatus = sharedPref.getBoolean("loginStatus", false);
+            if (loginStatus) {
+                toMainActivity();
+            }
+
             email = password = "";
             emailField = findViewById(R.id.username);
             passwordField = findViewById(R.id.password);
@@ -69,6 +77,11 @@ import java.util.Map;
                         Log.d("res", response);
                         if (response.equals("success")) {
                             Toast.makeText(LogIn.this, "Log in Successful", Toast.LENGTH_SHORT).show();
+                            SharedPreferences sharedPref = getSharedPreferences("LogIn", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor edit = sharedPref.edit();
+                            edit.putBoolean("loginStatus", true);
+                            edit.commit();
+                            Toast.makeText(getApplicationContext(), "Se ha almacenado la configuracion", Toast.LENGTH_SHORT).show();
                             toMainActivity();
                         } else if (response.equals("failure")) {
                             Toast.makeText(getApplicationContext(), "Invalid Login Id/Password", Toast.LENGTH_SHORT).show();

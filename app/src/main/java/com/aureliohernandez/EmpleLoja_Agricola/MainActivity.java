@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,10 +41,20 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Item 3 selected", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.item4:
-                Toast.makeText(this, "Item 4 selected", Toast.LENGTH_SHORT).show();
-                return true;
+                SharedPreferences sharedPref = getSharedPreferences("LogIn", Context.MODE_PRIVATE);
+                SharedPreferences.Editor edit = sharedPref.edit();
+                edit.putBoolean("loginStatus", false);
+                edit.commit();
+                toLogInActivity();
+
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void toLogInActivity(){
+        Intent intent = new Intent(this, LogIn.class);
+        startActivity(intent);
+        finish();
     }
 }
