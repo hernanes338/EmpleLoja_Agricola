@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".AddJob">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <EditText
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+        android:background="#30ffffff"
+        android:drawableStart="@drawable/ic_baseline_work_24"
+        android:drawablePadding="20dp"
+        android:hint="Titulo"
+        android:inputType="text"
+        android:padding="20dp"
+        android:textColor="@color/white"
+        android:textColorHint="#D3D3D3" />
+
+    <EditText
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+        android:background="#30ffffff"
+        android:drawableStart="@drawable/ic_baseline_description_24"
+        android:drawablePadding="20dp"
+        android:hint="Descripcion"
+        android:inputType="textMultiLine"
+        android:padding="20dp"
+        android:textColor="@color/white"
+        android:textColorHint="#D3D3D3" />
+
+    <EditText
+        android:id="@+id/startDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/description"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+        android:background="#30ffffff"
+        android:drawableStart="@drawable/ic_baseline_calendar_today_24"
+        android:drawablePadding="20dp"
+        android:hint="Fecha de inicio"
+        android:inputType="date"
+        android:padding="20dp"
+        android:textColor="@color/white"
+        android:textColorHint="#D3D3D3" />
+
+    <EditText
+        android:id="@+id/endDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/startDate"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+        android:background="#30ffffff"
+        android:drawableStart="@drawable/ic_baseline_calendar_today_24"
+        android:drawablePadding="20dp"
+        android:hint="Fecha de fin"
+        android:inputType="date"
+        android:padding="20dp"
+        android:textColor="@color/white"
+        android:textColorHint="#D3D3D3" />
+
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/addJobButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/endDate"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/colorSecondary"
+        android:text="Añadir Trabajo"
+        android:textColor="@color/white" />
+
+</RelativeLayout>

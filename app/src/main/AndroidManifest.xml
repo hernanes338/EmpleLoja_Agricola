@@ -26,6 +26,12 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" />
+        <activity
+            android:name=".MyJobs"
+            android:exported="true" />
+        <activity
+            android:name=".AddJob"
+            android:exported="true" />
     </application>
 
 </manifest>

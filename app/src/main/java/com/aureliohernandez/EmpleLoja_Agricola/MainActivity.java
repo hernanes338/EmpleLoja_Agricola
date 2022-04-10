@@ -25,6 +25,26 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Bienvenido, ");
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.refresh:
+                        Toast.makeText(getApplicationContext(), "Se ha actualizado la lista de trabajos", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.addJob:
+                        toAddJobActivity();
+                        break;
+                    case R.id.myJobs:
+                        toMyJobsActivity();
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -36,20 +56,32 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.item1:
+            case R.id.logOut:
                 SharedPreferences sharedPref = getSharedPreferences("LogIn", Context.MODE_PRIVATE);
                 SharedPreferences.Editor edit = sharedPref.edit();
                 edit.putBoolean("loginStatus", false);
                 edit.commit();
                 toLogInActivity();
-
-            default:
-                return super.onOptionsItemSelected(item);
+                break;
         }
+        return super.onOptionsItemSelected(item);
     }
+
 
     public void toLogInActivity(){
         Intent intent = new Intent(this, LogIn.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void toAddJobActivity(){
+        Intent intent = new Intent(this, AddJob.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void toMyJobsActivity(){
+        Intent intent = new Intent(this, MyJobs.class);
         startActivity(intent);
         finish();
     }
