@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.aureliohernandez.EmpleLoja_Agricola.Model.User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,9 +30,11 @@ import java.util.Map;
 public class SignUp extends AppCompatActivity {
     private String URL = "http://192.168.0.15/EmpleLoja_Agricola/php_scripts/signup.php";
     private EditText nameField, surnameField, phoneField, emailField, passwordField, repasswordField;
-    private String name, surname, phone, email, password, repassword, role;
+    private String name, surname, email, password, repassword;
+    private int phone, role_id;
     private RadioGroup roleField;
     private Button signUpButton;
+    private User user;
 
 
     @Override
@@ -52,7 +55,8 @@ public class SignUp extends AppCompatActivity {
         passwordField = (EditText) findViewById(R.id.password);
         repasswordField = (EditText) findViewById(R.id.rePassword);
 
-        name = surname = phone = email = password = repassword = role = "";
+        name = surname = email = password = repassword = "";
+        phone = role_id = 0;
 
         roleField = (RadioGroup) findViewById(R.id.radioGroupRole);
 
@@ -61,10 +65,10 @@ public class SignUp extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch(checkedId){
                     case R.id.radioButtonOffer:
-                        role = "1";
+                        role_id = 1;
                         break;
                     case R.id.radioButtonDemand:
-                        role = "2";
+                        role_id = 2;
                         break;
                 }
             }
@@ -75,7 +79,27 @@ public class SignUp extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signUp();
+                name = nameField.getText().toString().trim();
+                surname = surnameField.getText().toString().trim();
+                if (phoneField.getText().toString().trim().length()>0) {
+                    phone = Integer.parseInt(phoneField.getText().toString().trim());
+                } else {
+                    phone = 0;
+                }
+                email = emailField.getText().toString().trim();
+                password = passwordField.getText().toString().trim();
+                repassword = repasswordField.getText().toString().trim();
+
+                if (!name.equals("") && !surname.equals("") && phone != 0 && !email.equals("") && !password.equals("") && !repassword.equals("") && role_id != 0) {
+                    if(!password.equals(repassword)) {
+                        Toast.makeText(SignUp.this, "La contraseña no coincide", Toast.LENGTH_SHORT).show();
+                    } else {
+                        user = new User(name, surname, phone, email, password, role_id);
+                        signUp();
+                    }
+                } else{
+                    Toast.makeText(getApplicationContext(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -94,17 +118,6 @@ public class SignUp extends AppCompatActivity {
     }
 
     public void signUp() {
-        name = nameField.getText().toString().trim();
-        surname = surnameField.getText().toString().trim();
-        phone = phoneField.getText().toString().trim();
-        email = emailField.getText().toString().trim();
-        password = passwordField.getText().toString().trim();
-        repassword = repasswordField.getText().toString().trim();
-
-        if (!name.equals("") && !surname.equals("") && !phone.equals("") && !email.equals("") && !password.equals("") && !repassword.equals("") && !role.equals("")) {
-            if(!password.equals(repassword)) {
-                Toast.makeText(SignUp.this, "La contraseña no coincide", Toast.LENGTH_SHORT).show();
-            } else {
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -124,24 +137,19 @@ public class SignUp extends AppCompatActivity {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> data = new HashMap<>();
-                        data.put("name", name);
-                        data.put("surname", surname);
-                        data.put("phone", phone);
-                        data.put("email", email);
-                        data.put("password", password);
-                        data.put("role", role);
+                        data.put("name", user.getName());
+                        data.put("surname", user.getSurname());
+                        data.put("phone", String.valueOf(user.getPhone()));
+                        data.put("email", user.getEmail());
+                        data.put("password", user.getPassword());
+                        data.put("role_id", String.valueOf(user.getRole_id()));
                         return data;
                     }
                 };
                 RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
                 requestQueue.add(stringRequest);
             }
-        } else{
-            Toast.makeText(this, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
-        }
 
-
-    }
 
     public void toLogInScreen() {
         Intent intent = new Intent(this, LogIn.class);
