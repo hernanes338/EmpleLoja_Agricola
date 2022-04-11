@@ -12,17 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EmpleLojaAgricola">
         <activity
-            android:name=".SignUp"
-            android:exported="true" />
-        <activity
             android:name=".LogIn"
             android:exported="true"
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            </activity>
+        </activity>
+        <activity
+            android:name=".SignUp"
+            android:exported="true"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".MainActivity"
             android:exported="true" />
@@ -31,7 +33,8 @@
             android:exported="true" />
         <activity
             android:name=".AddJob"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="stateHidden"/>
     </application>
 
 </manifest>

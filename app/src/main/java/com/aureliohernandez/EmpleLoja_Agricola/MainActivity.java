@@ -9,13 +9,28 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
+
+    private UserLocalStore userLocalStore;
+
+    private final String URL = "http://192.168.0.15/EmpleLoja_Agricola/php_scripts/fetch_job_offers.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.refresh:
-                        Toast.makeText(getApplicationContext(), "Se ha actualizado la lista de trabajos", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(getApplicationContext(), "Se ha actualizado la lista de trabajos", Toast.LENGTH_SHORT).show();
+                        displayData();
                         break;
                     case R.id.addJob:
                         toAddJobActivity();
@@ -45,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        userLocalStore = new UserLocalStore(this);
+
     }
 
     @Override
@@ -57,14 +76,21 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.logOut:
-                SharedPreferences sharedPref = getSharedPreferences("LogIn", Context.MODE_PRIVATE);
-                SharedPreferences.Editor edit = sharedPref.edit();
-                edit.putBoolean("loginStatus", false);
-                edit.commit();
+                userLocalStore.clearUserData();
+                userLocalStore.setUserLoggedIn(false);
                 toLogInActivity();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void displayData() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                response -> Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_LONG).show(),
+                error -> Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_LONG).show()) {
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
     }
 
 

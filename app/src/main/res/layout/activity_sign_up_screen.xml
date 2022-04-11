@@ -6,7 +6,13 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     tools:context=".SignUp">
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
@@ -162,7 +168,7 @@
             android:text="Buscar trabajo" />
     </RadioGroup>
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/signUpButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -175,5 +181,6 @@
         android:backgroundTint="@color/colorSecondary"
         android:text="Crear cuenta"
         android:textColor="@color/white" />
-
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>
