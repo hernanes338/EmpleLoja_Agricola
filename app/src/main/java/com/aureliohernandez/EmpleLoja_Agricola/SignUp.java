@@ -28,7 +28,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SignUp extends AppCompatActivity {
-    private String URL = "http://192.168.0.15/EmpleLoja_Agricola/php_scripts/signup.php";
+    // Casa
+    private String URL = "http://192.168.0.25/EmpleLoja_Agricola/php_scripts/signup.php";
+    // Oficina
+    //private String URL = "http://192.168.1.130/EmpleLoja_Agricola/php_scripts/signup.php";
+
     private EditText nameField, surnameField, phoneField, emailField, passwordField, repasswordField;
     private String name, surname, email, password, repassword;
     private int phone, role_id;
@@ -65,10 +69,10 @@ public class SignUp extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch(checkedId){
                     case R.id.radioButtonOffer:
-                        role_id = 1;
+                        role_id = 2;
                         break;
                     case R.id.radioButtonDemand:
-                        role_id = 2;
+                        role_id = 3;
                         break;
                 }
             }

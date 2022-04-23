@@ -19,9 +19,15 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.aureliohernandez.EmpleLoja_Agricola.Model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,8 +35,12 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     private UserLocalStore userLocalStore;
+    // Casa
+    private final String URL = "http://192.168.0.25/EmpleLoja_Agricola/php_scripts/fetch_job_offers.php";
+    //Oficina
+    //private final String URL = "http://192.168.1.130/EmpleLoja_Agricola/php_scripts/fetch_job_offers.php";
 
-    private final String URL = "http://192.168.0.15/EmpleLoja_Agricola/php_scripts/fetch_job_offers.php";
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.logOut:
                 userLocalStore.clearUserData();
-                userLocalStore.setUserLoggedIn(false);
+                // userLocalStore.setUserLoggedIn(false);
                 toLogInActivity();
                 break;
         }
@@ -91,6 +101,44 @@ public class MainActivity extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
+    }
+
+    public void jsonParse() {
+        String URL_JSON = "";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL_JSON, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray jsonArray = response.getJSONArray("user");
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                        int id = jsonObject.getInt("id");
+                        String name = jsonObject.getString("name");
+                        String surname = jsonObject.getString("surname");
+                        String email = jsonObject.getString("email");
+                        int phone = jsonObject.getInt("phone");
+                        String  password = jsonObject.getString("password");
+                        int role = jsonObject.getInt("role");
+
+                        user = new User(id, name, surname, phone, email, password, role);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(jsonObjectRequest);
+
     }
 
 
