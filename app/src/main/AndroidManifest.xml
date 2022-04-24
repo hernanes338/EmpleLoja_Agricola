@@ -32,7 +32,7 @@
             android:name=".MyJobs"
             android:exported="true" />
         <activity
-            android:name=".AddJob"
+            android:name=".AddJobOffer"
             android:exported="true"
             android:windowSoftInputMode="stateHidden"/>
     </application>

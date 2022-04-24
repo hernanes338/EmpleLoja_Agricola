@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 12, 2022 at 01:23 AM
+-- Generation Time: Apr 24, 2022 at 11:55 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.28
 
@@ -24,6 +24,52 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `job_demands`
+--
+
+CREATE TABLE `job_demands` (
+  `ID` int(11) NOT NULL,
+  `TITLE` varchar(128) NOT NULL,
+  `DESCRIPTION` varchar(128) NOT NULL,
+  `USER_ID` int(11) NOT NULL,
+  `AVAILABLE_FROM` date NOT NULL,
+  `ACTIVE` text NOT NULL DEFAULT 'Y'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `job_demands`
+--
+
+INSERT INTO `job_demands` (`ID`, `TITLE`, `DESCRIPTION`, `USER_ID`, `AVAILABLE_FROM`, `ACTIVE`) VALUES
+(1, 'Titulo demanda de trabajo', 'Descripcion demanda de trabajo', 3, '2022-06-01', 'Y');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `job_offers`
+--
+
+CREATE TABLE `job_offers` (
+  `ID` int(11) NOT NULL,
+  `TITLE` varchar(128) NOT NULL,
+  `DESCRIPTION` varchar(300) NOT NULL,
+  `USER_ID` int(11) NOT NULL,
+  `START_DATE` date NOT NULL,
+  `END_DATE` date NOT NULL,
+  `SALARY_HOUR` float NOT NULL,
+  `ACTIVE` varchar(1) NOT NULL DEFAULT 'Y'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `job_offers`
+--
+
+INSERT INTO `job_offers` (`ID`, `TITLE`, `DESCRIPTION`, `USER_ID`, `START_DATE`, `END_DATE`, `SALARY_HOUR`, `ACTIVE`) VALUES
+(1, 'Titulo oferta de trabajo', 'Descripcion oferta de trabajo', 2, '2022-06-01', '2022-06-30', 7.5, 'Y');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `roles`
 --
 
@@ -38,8 +84,9 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`ROLE_ID`, `ROLE_CODE`, `ROLE_NAME`) VALUES
-(1, 'OFERT', 'Ofertante'),
-(2, 'DEMAN', 'Demandante');
+(1, 'ADMIN', 'Administrador'),
+(2, 'OFERT', 'Ofertante de empleo'),
+(3, 'DEMAN', 'Demandante de empleo');
 
 -- --------------------------------------------------------
 
@@ -62,12 +109,27 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`USER_ID`, `NAME`, `SURNAME`, `PHONE`, `EMAIL`, `PASSWORD`, `ROLE_ID`) VALUES
-(1, 'Admin', 'Ofertante', 123456789, 'admin_ofertante', '953a5d022f7bc377605900767d09e00c', 1),
-(2, 'Admin', 'Demandante', 987654321, 'admin_demandante', '8970d7b377a51822f2674b8fdb51000e', 2);
+(1, 'Admin', 'Admin', 123456789, 'admin', '21232f297a57a5a743894a0e4a801fc3', 1),
+(2, 'Usuario', 'Ofertante', 123456789, 'usuario_ofertante', '0b6a4bbf52c501be76f61139b3b04ab3', 2),
+(3, 'Usuario', 'Demandante', 123456789, 'usuario_demandante', '173d7a26658653c3fa21b5005c2016e2', 3);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `job_demands`
+--
+ALTER TABLE `job_demands`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `USER_ID_JOB_DEMANDS_FK` (`USER_ID`);
+
+--
+-- Indexes for table `job_offers`
+--
+ALTER TABLE `job_offers`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `USER_ID_JOB_OFFERS_FK` (`USER_ID`);
 
 --
 -- Indexes for table `roles`
@@ -90,20 +152,44 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `job_demands`
+--
+ALTER TABLE `job_demands`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `job_offers`
+--
+ALTER TABLE `job_offers`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `ROLE_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ROLE_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `USER_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `USER_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `job_demands`
+--
+ALTER TABLE `job_demands`
+  ADD CONSTRAINT `USER_ID_JOB_DEMANDS_FK` FOREIGN KEY (`USER_ID`) REFERENCES `users` (`USER_ID`);
+
+--
+-- Constraints for table `job_offers`
+--
+ALTER TABLE `job_offers`
+  ADD CONSTRAINT `USER_ID_JOB_OFFERS_FK` FOREIGN KEY (`USER_ID`) REFERENCES `users` (`USER_ID`);
 
 --
 -- Constraints for table `users`
