@@ -63,7 +63,6 @@ import java.util.Map;
                     password = passwordField.getText().toString().trim();
                     if(!email.equals("") && !password.equals("")){
                         user = new User(email, password);
-                        System.out.println(user.getEmail()+user.getPassword());
                         logIn();
                     }else{
                         Toast.makeText(getApplicationContext(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
@@ -100,7 +99,6 @@ import java.util.Map;
                         if (response.equals("success")) {
                             userLocalStore.setUserLoggedIn(true);
                             storeUserDetails();
-                            toMainActivity();
                         } else if (response.equals("failure")) {
                             Toast.makeText(getApplicationContext(), "Correo electrónico o contraseña incorrectos", Toast.LENGTH_SHORT).show();
                         }
@@ -215,6 +213,8 @@ import java.util.Map;
                         userLocalStore.storeUserData(user);
 
                         System.out.println("Detalles del usuario guardados");
+
+                        toMainActivity();
 
                     } catch (JSONException e) {
                         e.printStackTrace();

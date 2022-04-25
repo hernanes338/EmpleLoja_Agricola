@@ -3,12 +3,12 @@ package com.aureliohernandez.EmpleLoja_Agricola.Model;
 import java.sql.Date;
 
 public class JobDemand {
-    int demand_id, user_id;
+    int jobDemand_id, user_id;
     String title, description, active;
     Date available_from;
 
-    public JobDemand(int demand_id, int user_id, String title, String description, String active, Date available_from) {
-        this.demand_id = demand_id;
+    public JobDemand(int jobDemand_id, String title, String description, int user_id, Date available_from, String active) {
+        this.jobDemand_id = jobDemand_id;
         this.user_id = user_id;
         this.title = title;
         this.description = description;
@@ -26,11 +26,11 @@ public class JobDemand {
 
 
     public int getDemand_id() {
-        return demand_id;
+        return jobDemand_id;
     }
 
     public void setDemand_id(int demand_id) {
-        this.demand_id = demand_id;
+        this.jobDemand_id = demand_id;
     }
 
     public String getTitle() {

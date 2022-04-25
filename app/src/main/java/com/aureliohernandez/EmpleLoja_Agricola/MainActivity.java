@@ -39,14 +39,19 @@ public class MainActivity extends AppCompatActivity {
     private JobDemand jobDemand;
     private UserLocalStore userLocalStore;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        userLocalStore = new UserLocalStore(this);
+        user = userLocalStore.getLoggedInUser();
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Bienvenido, ");
+        actionBar.setTitle("¡Bienvenido " + user.getName() + "!");
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
 
@@ -55,13 +60,22 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.refresh:
-                        // fetchJobOffers();
-                        // fetchJobDemands();
-                        // Toast.makeText(getApplicationContext(), "Se ha actualizado la lista de trabajos", Toast.LENGTH_SHORT).show();
+                        if (user.getRole_id() == 2) {
+                            fetchJobOffers();
+                        } else if (user.getRole_id() == 3) {
+                            fetchJobDemands();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Tipo de usuario incorrecto", Toast.LENGTH_SHORT).show();
+                        }
                         break;
                     case R.id.addJob:
-                        // toAddJobOfferActivity();
-                        toAddJobDemandActivity();
+                        if (user.getRole_id() == 2) {
+                            toAddJobOfferActivity();
+                        } else if (user.getRole_id() == 3) {
+                            toAddJobDemandActivity();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Tipo de usuario incorrecto", Toast.LENGTH_SHORT).show();
+                        }
                         break;
                     case R.id.myJobs:
                         toMyJobsActivity();
@@ -70,8 +84,6 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-        userLocalStore = new UserLocalStore(this);
 
     }
 
@@ -86,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.logOut:
                 userLocalStore.clearUserData();
-                userLocalStore.setUserLoggedIn(false);
                 toLogInActivity();
                 break;
         }
@@ -110,45 +121,6 @@ public class MainActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
     }
-
-    public void jsonParse() {
-        String URL_JSON = "";
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL_JSON, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray jsonArray = response.getJSONArray("user");
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-                        int id = jsonObject.getInt("id");
-                        String name = jsonObject.getString("name");
-                        String surname = jsonObject.getString("surname");
-                        String email = jsonObject.getString("email");
-                        int phone = jsonObject.getInt("phone");
-                        String  password = jsonObject.getString("password");
-                        int role = jsonObject.getInt("role");
-
-                        user = new User(id, name, surname, phone, email, password, role);
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        requestQueue.add(jsonObjectRequest);
-
-    }
-
 
     public void toLogInActivity(){
         Intent intent = new Intent(this, LogIn.class);

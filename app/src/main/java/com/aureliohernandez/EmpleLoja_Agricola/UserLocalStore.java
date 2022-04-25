@@ -40,6 +40,8 @@ public class UserLocalStore {
         return storedUser;
     }
 
+
+
     public void setUserLoggedIn(boolean loggedIn) {
         SharedPreferences.Editor sharedPreferencesEditor = userLocalDatabase.edit();
         sharedPreferencesEditor.putBoolean("loggedIn", loggedIn);
