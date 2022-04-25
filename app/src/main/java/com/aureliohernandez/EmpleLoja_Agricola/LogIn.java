@@ -79,6 +79,8 @@ import java.util.Map;
                     toSignUpActivity();
                 }
             });
+
+
         }
 
         @Override
@@ -134,9 +136,14 @@ import java.util.Map;
             finish();
         }
 
+
+
+/*
         public void storeUserDetails() {
             String URL_USER_DETAILS = "http://192.168.0.25/EmpleLoja_Agricola/php_scripts/fetch_user_details.php";
-            RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL_USER_DETAILS, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
@@ -146,13 +153,13 @@ import java.util.Map;
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                            int id = jsonObject.getInt("id");
-                            String name = jsonObject.getString("name");
-                            String surname = jsonObject.getString("surname");
-                            String email = jsonObject.getString("email");
-                            int phone = jsonObject.getInt("phone");
-                            String  password = jsonObject.getString("password");
-                            int role = jsonObject.getInt("role");
+                            int id = jsonObject.getInt("USER_ID");
+                            String name = jsonObject.getString("NAME");
+                            String surname = jsonObject.getString("SURNAME");
+                            int phone = jsonObject.getInt("PHONE");
+                            String email = jsonObject.getString("EMAIL");
+                            String  password = jsonObject.getString("PASSWORD");
+                            int role = jsonObject.getInt("ROLE_ID");
 
                             user = new User(id, name, surname, phone, email, password, role);
 
@@ -168,8 +175,7 @@ import java.util.Map;
                 public void onErrorResponse(VolleyError error) {
                     System.out.println("Response failed: " + error);
                 }
-            })
-            {
+            }){
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> data = new HashMap<>();
@@ -181,7 +187,57 @@ import java.util.Map;
             requestQueue.add(jsonObjectRequest);
 
         }
+ */
 
+        public void storeUserDetails() {
+            String URL_USER_DETAILS = "http://192.168.0.25/EmpleLoja_Agricola/php_scripts/fetch_user_details.php";
+
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_USER_DETAILS, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONArray jsonArray = new JSONArray(response);
+
+                        JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+                        int id = jsonObject.getInt("USER_ID");
+                        String name = jsonObject.getString("NAME");
+                        String surname = jsonObject.getString("SURNAME");
+                        int phone = jsonObject.getInt("PHONE");
+                        String email = jsonObject.getString("EMAIL");
+                        String  password = jsonObject.getString("PASSWORD");
+                        int role = jsonObject.getInt("ROLE_ID");
+
+                        user = new User(id, name, surname, phone, email, password, role);
+
+                        userLocalStore.storeUserData(user);
+
+                        System.out.println("Detalles del usuario guardados");
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println("Response failed: " + error);
+                }
+            }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> data = new HashMap<>();
+                    data.put("email", user.getEmail());
+                    return data;
+                }
+            };
+
+            requestQueue.add(stringRequest);
+
+        }
 
     }
 

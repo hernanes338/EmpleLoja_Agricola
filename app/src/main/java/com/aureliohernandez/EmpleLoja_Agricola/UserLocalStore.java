@@ -54,6 +54,8 @@ public class UserLocalStore {
         }
     }
 
+
+
     public void clearUserData(){
         SharedPreferences.Editor sharedPreferencesEditor = userLocalDatabase.edit();
         sharedPreferencesEditor.clear();

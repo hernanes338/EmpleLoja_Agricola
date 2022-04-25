@@ -23,21 +23,23 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.aureliohernandez.EmpleLoja_Agricola.Model.JobDemand;
+import com.aureliohernandez.EmpleLoja_Agricola.Model.JobOffer;
 import com.aureliohernandez.EmpleLoja_Agricola.Model.User;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class AddJobDemand extends AppCompatActivity {
 
-    private EditText nameField, surnameField, phoneField, emailField, passwordField, repasswordField;
-    private String name, surname, email, password, repassword;
-    private int phone, role_id;
-    private RadioGroup roleField;
-    private Button signUpButton;
-    private User user;
+    private EditText titleField, descriptionField, availableFromField;
+    private String title, description;
+    private int user_id;
+    private Date availableFrom;
+    private Button addJobDemandButton;
+    private JobDemand jobDemand;
 
-    private Button addJobButton;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,15 +49,24 @@ public class AddJobDemand extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Introduzca los detalles del trabajo");
+        actionBar.setTitle("Detalles de la demanda");
 
-        addJobButton = (Button) findViewById(R.id.addJobButton);
+        titleField = (EditText) findViewById(R.id.title);
+        descriptionField = (EditText) findViewById(R.id.description);
+        availableFromField = (EditText) findViewById(R.id.availableFromDate);
 
-        addJobButton.setOnClickListener(new View.OnClickListener() {
+        addJobDemandButton = (Button) findViewById(R.id.addJobDemandButton);
+
+        addJobDemandButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Se ha creado un nuevo trabajo", Toast.LENGTH_SHORT).show();
-                toMainScreen();
+                title = titleField.getText().toString().trim();
+                description = descriptionField.getText().toString().trim();
+                user_id = 3; // TO DO: obtener el user_id del archivo sharedPreferences
+                availableFrom = Date.valueOf(availableFromField.getText().toString().trim());
+
+                jobDemand = new JobDemand(title, description, user_id, availableFrom);
+                addJobDemand();
             }
         });
     }
@@ -72,16 +83,17 @@ public class AddJobDemand extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void logIn() {
+    public void addJobDemand() {
         final String URL_LOGIN = "http://192.168.0.25/EmpleLoja_Agricola/php_scripts/add_job_demands.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_LOGIN, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.e("Res: ", response);
                 if (response.equals("success")) {
+                    Toast.makeText(getApplicationContext(), "Se ha creado una nueva demanda de trabajo", Toast.LENGTH_SHORT).show();
                     toMainScreen();
                 } else if (response.equals("failure")) {
-                    Toast.makeText(getApplicationContext(), "Trabajo no creado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Demanda de trabajo no creada", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
@@ -93,10 +105,10 @@ public class AddJobDemand extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> data = new HashMap<>();
-                data.put("title", user.getEmail());
-                data.put("description", user.getPassword());
-                data.put("user_id", user.getEmail());
-                data.put("available_from", user.getPassword());
+                data.put("title", jobDemand.getTitle());
+                data.put("description", jobDemand.getDescription());
+                data.put("user_id", Integer.toString(jobDemand.getUser_id()));
+                data.put("available_from", jobDemand.getAvailable_from().toString());
                 return data;
             }
         };

@@ -35,6 +35,11 @@
             android:name=".AddJobOffer"
             android:exported="true"
             android:windowSoftInputMode="stateHidden"/>
+
+        <activity
+            android:name=".AddJobDemand"
+            android:exported="true"
+            android:windowSoftInputMode="stateHidden"/>
     </application>
 
 </manifest>

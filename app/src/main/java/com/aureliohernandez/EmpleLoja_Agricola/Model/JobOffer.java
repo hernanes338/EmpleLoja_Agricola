@@ -19,6 +19,15 @@ public class JobOffer {
         this.end_date = end_date;
     }
 
+    public JobOffer(String title, String description, int user_id, double salary_hour, Date start_date, Date end_date) {
+        this.title = title;
+        this.description = description;
+        this.user_id = user_id;
+        this.salary_hour = salary_hour;
+        this.start_date = start_date;
+        this.end_date = end_date;
+    }
+
     public int getOffer_id() {
         return offer_id;
     }

@@ -18,6 +18,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.aureliohernandez.EmpleLoja_Agricola.Model.JobDemand;
+import com.aureliohernandez.EmpleLoja_Agricola.Model.JobOffer;
 import com.aureliohernandez.EmpleLoja_Agricola.Model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -27,13 +29,15 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
-    private UserLocalStore userLocalStore;
     // Casa
-    private final String URL = "http://192.168.0.25/EmpleLoja_Agricola/php_scripts/fetch_job_offers.php";
+    private final String URL_FETCH_JOB_OFFERS = "http://192.168.0.25/EmpleLoja_Agricola/php_scripts/fetch_job_offers.php";
+    private final String URL_FETCH_JOB_DEMANDS = "http://192.168.0.25/EmpleLoja_Agricola/php_scripts/fetch_job_demands.php";
     //Oficina
-    //private final String URL = "http://192.168.1.130/EmpleLoja_Agricola/php_scripts/fetch_job_offers.php";
 
-    User user;
+    private User user;
+    private JobOffer jobOffer;
+    private JobDemand jobDemand;
+    private UserLocalStore userLocalStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +55,13 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.refresh:
+                        // fetchJobOffers();
+                        // fetchJobDemands();
                         // Toast.makeText(getApplicationContext(), "Se ha actualizado la lista de trabajos", Toast.LENGTH_SHORT).show();
-                        displayData();
                         break;
                     case R.id.addJob:
-                        toAddJobActivity();
+                        // toAddJobOfferActivity();
+                        toAddJobDemandActivity();
                         break;
                     case R.id.myJobs:
                         toMyJobsActivity();
@@ -80,17 +86,26 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.logOut:
                 userLocalStore.clearUserData();
-                // userLocalStore.setUserLoggedIn(false);
+                userLocalStore.setUserLoggedIn(false);
                 toLogInActivity();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void displayData() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+    public void fetchJobOffers() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_FETCH_JOB_OFFERS,
                 response -> Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_LONG).show(),
-                error -> Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_LONG).show()) {
+                error -> Toast.makeText(MainActivity.this, "Error: " +error, Toast.LENGTH_LONG).show()) {
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+    }
+
+    public void fetchJobDemands() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_FETCH_JOB_DEMANDS,
+                response -> Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_LONG).show(),
+                error -> Toast.makeText(MainActivity.this, "Error: " +error, Toast.LENGTH_LONG).show()) {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
@@ -141,8 +156,14 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    public void toAddJobActivity(){
+    public void toAddJobOfferActivity(){
         Intent intent = new Intent(this, AddJobOffer.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void toAddJobDemandActivity(){
+        Intent intent = new Intent(this, AddJobDemand.class);
         startActivity(intent);
         finish();
     }

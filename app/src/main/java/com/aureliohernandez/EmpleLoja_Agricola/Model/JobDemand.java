@@ -16,6 +16,15 @@ public class JobDemand {
         this.available_from = available_from;
     }
 
+    public JobDemand(String title, String description, int user_id, Date available_from) {
+        this.title = title;
+        this.description = description;
+        this.user_id = user_id;
+        this.available_from = available_from;
+    }
+
+
+
     public int getDemand_id() {
         return demand_id;
     }

@@ -6,17 +6,19 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     tools:context=".AddJobOffer">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar" />
 
     <EditText
         android:id="@+id/title"
@@ -54,23 +56,23 @@
         android:textColor="@color/white"
         android:textColorHint="#D3D3D3" />
 
-            <EditText
-                android:id="@+id/salaryHour"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/description"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="5dp"
-                android:background="#30ffffff"
-                android:drawableStart="@drawable/ic_baseline_attach_money_24"
-                android:drawablePadding="20dp"
-                android:hint="Salario por hora"
-                android:inputType="numberDecimal"
-                android:padding="20dp"
-                android:textColor="@color/white"
-                android:textColorHint="#D3D3D3" />
+    <EditText
+        android:id="@+id/salaryHour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/description"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+        android:background="#30ffffff"
+        android:drawableStart="@drawable/ic_baseline_attach_money_24"
+        android:drawablePadding="20dp"
+        android:hint="Salario por hora (XX.XX)"
+        android:inputType="numberDecimal"
+        android:padding="20dp"
+        android:textColor="@color/white"
+        android:textColorHint="#D3D3D3" />
 
     <EditText
         android:id="@+id/startDate"
@@ -84,7 +86,7 @@
         android:background="#30ffffff"
         android:drawableStart="@drawable/ic_baseline_calendar_today_24"
         android:drawablePadding="20dp"
-        android:hint="Fecha de inicio (DD-MM-AAAA)"
+        android:hint="Fecha de inicio (AAAA-MM-DD)"
         android:inputType="date"
         android:padding="20dp"
         android:textColor="@color/white"
@@ -102,16 +104,14 @@
         android:background="#30ffffff"
         android:drawableStart="@drawable/ic_baseline_calendar_today_24"
         android:drawablePadding="20dp"
-        android:hint="Fecha de fin (DD-MM-AAAA)"
+        android:hint="Fecha de fin (AAAA-MM-DD)"
         android:inputType="date"
         android:padding="20dp"
         android:textColor="@color/white"
         android:textColorHint="#D3D3D3" />
 
-
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/addJobButton"
+    <Button
+        android:id="@+id/addJobOfferButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/endDate"
@@ -121,8 +121,11 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:backgroundTint="@color/colorSecondary"
-        android:text="Añadir Trabajo"
+        android:text="Añadir Oferta de Trabajo"
         android:textColor="@color/white" />
-</RelativeLayout>
+
+        </RelativeLayout>
+
     </ScrollView>
+
 </RelativeLayout>
