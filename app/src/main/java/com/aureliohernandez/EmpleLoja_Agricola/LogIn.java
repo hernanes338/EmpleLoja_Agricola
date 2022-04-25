@@ -29,11 +29,6 @@ import java.util.Map;
 
 
     public class LogIn extends AppCompatActivity {
-        // Casa
-        //private final String URL = "http://192.168.0.25/EmpleLoja_Agricola/php_scripts/login.php";
-        // Oficina
-        //private final String URL = "http://192.168.1.130/EmpleLoja_Agricola/php_scripts/login.php";
-
 
         private EditText emailField, passwordField;
         private String email, password;

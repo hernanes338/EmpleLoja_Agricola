@@ -8,6 +8,10 @@ public class JobOffer {
     String title, description, active;
     Date start_date, end_date;
 
+    public JobOffer() {
+
+    }
+
     public JobOffer(int jobOffer_id, String title, String description, int user_id, Date start_date, Date end_date, double salary_hour, String active) {
         this.jobOffer_id = jobOffer_id;
         this.title = title;
