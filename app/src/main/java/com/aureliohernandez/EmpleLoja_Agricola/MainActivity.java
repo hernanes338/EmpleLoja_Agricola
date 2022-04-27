@@ -4,11 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -32,16 +35,16 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecyclerViewJobOfferInterface, RecyclerViewJobDemandInterface {
 
     private User user;
     private JobOffer jobOffer;
     private JobDemand jobDemand;
     private UserLocalStore userLocalStore;
-    private ArrayList<JobOffer> jobOffers = new ArrayList<JobOffer>();
-    private ArrayList<JobDemand> jobDemands = new ArrayList<JobDemand>();
-
+    private ArrayList<JobOffer> jobOffers = new ArrayList<>();
+    private ArrayList<JobDemand> jobDemands = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,38 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("¡Bienvenido " + user.getName() + "!");
 
+        if(user.getRole_id() == 2) {
+            fetchJobDemands();
+        } else if (user.getRole_id() == 3) {
+            fetchJobOffers();
+        } else {
+            Toast.makeText(getApplicationContext(), "Tipo de usuario incorrecto", Toast.LENGTH_SHORT).show();
+        }
+
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if(user.getRole_id() == 2) {
+            RecyclerView recyclerView = findViewById(R.id.recyclerView);
+
+            RecyclerViewJobDemand adapter = new RecyclerViewJobDemand(this, jobDemands, this);
+
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        } else if (user.getRole_id() == 3) {
+            RecyclerView recyclerView = findViewById(R.id.recyclerView);
+
+            RecyclerViewJobOffer adapter = new RecyclerViewJobOffer(this, jobOffers, this);
+
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        } else {
+            Toast.makeText(getApplicationContext(), "Tipo de usuario incorrecto", Toast.LENGTH_SHORT).show();
+        }
+
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -64,9 +99,9 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.refresh:
                         if (user.getRole_id() == 2) {
-                            fetchJobDemands();
+
                         } else if (user.getRole_id() == 3) {
-                            fetchJobOffers();
+
                         } else {
                             Toast.makeText(getApplicationContext(), "Tipo de usuario incorrecto", Toast.LENGTH_SHORT).show();
                         }
@@ -87,14 +122,6 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-        if(user.getRole_id() == 2) {
-            fetchJobDemands();
-        } else if (user.getRole_id() == 3) {
-            fetchJobOffers();
-        } else {
-            Toast.makeText(getApplicationContext(), "Tipo de usuario incorrecto", Toast.LENGTH_SHORT).show();
-        }
 
     }
 
@@ -142,18 +169,12 @@ public class MainActivity extends AppCompatActivity {
                         jobOffer = new JobOffer(id, title, description, user_id, start_date, end_date, salary_hour, active);
 
                         jobOffers.add(jobOffer);
+
                     }
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                } finally {
-                    for(int i = 0; i < jobOffers.size(); i++)
-                    {
-                        JobOffer jobOffer = jobOffers.get(i);
-                        System.out.println("Usuario ofertante: " + jobOffer.getOffer_id() + "\t" + jobOffer.getTitle() + "\t" + jobOffer.getDescription()
-                                + "\t" + jobOffer.getUser_id() + "\t" + jobOffer.getStart_date() + "\t" + jobOffer.getEnd_date()
-                                + "\t" + jobOffer.getSalary_hour() + "\t" + jobOffer.getActive());
-                    }
                 }
             }
 
@@ -196,17 +217,8 @@ public class MainActivity extends AppCompatActivity {
 
                     }
 
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
-                } finally {
-                    for(int i = 0; i < jobDemands.size(); i++)
-                    {
-                        JobDemand jobDemand = jobDemands.get(i);
-                        System.out.println("Usuario demandante: " + jobDemand.getDemand_id() + "\t" + jobDemand.getTitle() + "\t" + jobDemand.getDescription()+ "\t"
-                                + jobDemand.getUser_id() + "\t" + jobDemand.getAvailable_from() + "\t" + jobDemand.getActive());
-                    }
                 }
             }
 
@@ -243,5 +255,24 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MyJobs.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onItemClick(int position) {
+
+        if (user.getRole_id() == 2) {
+            Intent intent = new Intent (MainActivity.this, JobDemandDetailsContact.class);
+            intent.putExtra("NAME", jobDemands.get(position).getTitle());
+            startActivity(intent);
+
+        } else if (user.getRole_id() == 3) {
+            Intent intent = new Intent (MainActivity.this, JobOfferDetailsContact.class);
+            intent.putExtra("NAME", jobOffers.get(position).getTitle());
+            startActivity(intent);
+
+        } else {
+            Toast.makeText(getApplicationContext(), "Tipo de usuario incorrecto", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }
