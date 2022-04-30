@@ -11,15 +11,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.aureliohernandez.EmpleLoja_Agricola.Model.JobDemand;
@@ -33,8 +30,6 @@ import org.json.JSONObject;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity implements RecyclerViewJobOfferInterface, RecyclerViewJobDemandInterface {
@@ -99,9 +94,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
                 switch (item.getItemId()) {
                     case R.id.refresh:
                         if (user.getRole_id() == 2) {
-
+                            Toast.makeText(getApplicationContext(), "Funcionalidad no disponible", Toast.LENGTH_SHORT).show();
                         } else if (user.getRole_id() == 3) {
-
+                            Toast.makeText(getApplicationContext(), "Funcionalidad no disponible", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(getApplicationContext(), "Tipo de usuario incorrecto", Toast.LENGTH_SHORT).show();
                         }
@@ -116,8 +111,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
                         }
                         break;
                     case R.id.myJobs:
-                        toMyJobsActivity();
-                        break;
+                        toMyJobOffersActivity();
                 }
                 return false;
             }
@@ -251,23 +245,37 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
         finish();
     }
 
-    public void toMyJobsActivity(){
-        Intent intent = new Intent(this, MyJobs.class);
+    public void toMyJobOffersActivity(){
+        Intent intent = new Intent(this, MyJobOffers.class);
         startActivity(intent);
         finish();
     }
+
 
     @Override
     public void onItemClick(int position) {
 
         if (user.getRole_id() == 2) {
             Intent intent = new Intent (MainActivity.this, JobDemandDetailsContact.class);
-            intent.putExtra("NAME", jobDemands.get(position).getTitle());
+            intent.putExtra("Job_Demand_Id", String.valueOf(jobDemands.get(position).getDemand_id()));
+            intent.putExtra("Title", jobDemands.get(position).getTitle());
+            intent.putExtra("Description", jobDemands.get(position).getDescription());
+            intent.putExtra("Available_From", String.valueOf(jobDemands.get(position).getAvailable_from()));
+            intent.putExtra("User_id", String.valueOf(jobDemands.get(position).getUser_id()));
+            intent.putExtra("Active", String.valueOf(jobDemands.get(position).getActive()));
+
             startActivity(intent);
 
         } else if (user.getRole_id() == 3) {
             Intent intent = new Intent (MainActivity.this, JobOfferDetailsContact.class);
-            intent.putExtra("NAME", jobOffers.get(position).getTitle());
+            intent.putExtra("Job_Offer_Id", String.valueOf(jobOffers.get(position).getOffer_id()));
+            intent.putExtra("Title", jobOffers.get(position).getTitle());
+            intent.putExtra("Description", jobOffers.get(position).getDescription());
+            intent.putExtra("Start_Date", String.valueOf(jobOffers.get(position).getStart_date()));
+            intent.putExtra("End_Date", String.valueOf(jobOffers.get(position).getEnd_date()));
+            intent.putExtra("Salary_Hour", String.valueOf(jobOffers.get(position).getSalary_hour()));
+            intent.putExtra("User_id", String.valueOf(jobOffers.get(position).getUser_id()));
+            intent.putExtra("Active", String.valueOf(jobOffers.get(position).getActive()));
             startActivity(intent);
 
         } else {

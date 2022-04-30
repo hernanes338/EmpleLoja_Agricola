@@ -18,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import com.aureliohernandez.EmpleLoja_Agricola.Model.JobDemand;
 import com.aureliohernandez.EmpleLoja_Agricola.Model.JobOffer;
 import com.aureliohernandez.EmpleLoja_Agricola.Model.User;
@@ -29,10 +30,9 @@ import org.json.JSONObject;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
-public class MyJobs extends AppCompatActivity {
+public class MyJobOffers extends AppCompatActivity {
 
     private User user;
     private JobOffer jobOffer;
@@ -45,7 +45,7 @@ public class MyJobs extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_jobs_screen);
+        setContentView(R.layout.activity_my_job_offers_screen);
 
         userLocalStore = new UserLocalStore(this);
         user = userLocalStore.getLoggedInUser();
@@ -55,13 +55,16 @@ public class MyJobs extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Mis trabajos");
+        actionBar.setTitle("Mis Trabajos");
 
-        if(user.getRole_id() == 2) {
+        System.out.println("Rol:" +user.getRole_id());
+
+        if (user.getRole_id() == 2) {
             fetchMyJobOffers();
         } else if (user.getRole_id() == 3) {
             fetchMyJobDemands();
-        } else {
+        }
+        else {
             Toast.makeText(getApplicationContext(), "Tipo de usuario incorrecto", Toast.LENGTH_SHORT).show();
         }
     }

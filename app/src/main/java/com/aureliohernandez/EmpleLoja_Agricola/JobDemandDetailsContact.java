@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class JobDemandDetailsContact extends AppCompatActivity {
+    private String title, description, availableFrom;
+    private ImageButton phoneCallButton, sendSmsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +28,36 @@ public class JobDemandDetailsContact extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Detalles de la demanda");
 
-        String name = getIntent().getStringExtra("NAME");
+        title = getIntent().getStringExtra("Title");
+        description = getIntent().getStringExtra("Description");
+        availableFrom = getIntent().getStringExtra("Available_From");
 
-        TextView nameTextView = findViewById(R.id.jobDemandName);
+        TextView titleTextView = findViewById(R.id.titletextView);
+        TextView descriptionTextView = findViewById(R.id.descriptionTextView);
+        TextView startDateTextView = findViewById(R.id.availableFromTextView);
 
-        nameTextView.setText(name);
+        titleTextView.setText(title);
+        descriptionTextView.setText(description);
+        startDateTextView.setText(availableFrom);
+
+
+        phoneCallButton = (ImageButton) findViewById(R.id.callButton);
+
+        phoneCallButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                phoneCall ();
+            }
+        });
+
+        sendSmsButton = (ImageButton) findViewById(R.id.smsButton);
+
+        sendSmsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendSms ();
+            }
+        });
     }
 
     @Override
@@ -53,5 +82,13 @@ public class JobDemandDetailsContact extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public void phoneCall () {
+
+    }
+
+    public void sendSms () {
+
     }
 }

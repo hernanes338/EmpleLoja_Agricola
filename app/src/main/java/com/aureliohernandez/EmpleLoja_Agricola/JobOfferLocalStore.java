@@ -45,7 +45,7 @@ public class JobOfferLocalStore {
         return jobOffer;
     }
 
-    public void clearUserData(){
+    public void clearJobOfferData(){
         SharedPreferences.Editor sharedPreferencesEditor = jobOfferLocalDatabase.edit();
         sharedPreferencesEditor.clear();
         sharedPreferencesEditor.commit();

@@ -32,6 +32,8 @@ import java.util.Map;
 
 public class AddJobOffer extends AppCompatActivity {
 
+    private User user;
+    private UserLocalStore userLocalStore;
     private EditText titleField, descriptionField, salaryHourField, startDateField, endDateField;
     private String title, description;
     private int user_id;
@@ -51,6 +53,9 @@ public class AddJobOffer extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Detalles de la oferta");
 
+        userLocalStore = new UserLocalStore(this);
+        user = userLocalStore.getLoggedInUser();
+
         titleField = (EditText) findViewById(R.id.title);
         descriptionField = (EditText) findViewById(R.id.description);
         salaryHourField = (EditText) findViewById(R.id.salaryHour);
@@ -65,7 +70,7 @@ public class AddJobOffer extends AppCompatActivity {
 
                 title = titleField.getText().toString().trim();
                 description = descriptionField.getText().toString().trim();
-                user_id = 2; // TO DO: obtener el user_id del archivo sharedPreferences
+                user_id = user.getUser_id();
                 salaryHour = Double.parseDouble(salaryHourField.getText().toString().trim());
                 startDate = Date.valueOf(startDateField.getText().toString().trim());
                 endDate = Date.valueOf(endDateField.getText().toString().trim());

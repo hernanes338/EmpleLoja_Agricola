@@ -31,14 +31,15 @@ public class RecyclerViewJobDemand extends RecyclerView.Adapter<RecyclerViewJobD
     public RecyclerViewJobDemand.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Inflate the layout (Giving a look to our rows)
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.recycler_view_row, parent, false);
+        View view = inflater.inflate(R.layout.recycler_view_row_job_demand, parent, false);
         return new RecyclerViewJobDemand.MyViewHolder(view, recyclerViewJobDemandInterface);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewJobDemand.MyViewHolder holder, int position) {
         // Assigning values to the views created in the layout file based on the position of the recycler view
-        holder.jobName.setText(jobDemands.get(position).getTitle());
+        holder.jobDemandTitle.setText(jobDemands.get(position).getTitle());
+        holder.jobAvailable.setText(String.valueOf("Disponible desde: " + jobDemands.get(position).getAvailable_from()));
     }
 
     @Override
@@ -50,11 +51,12 @@ public class RecyclerViewJobDemand extends RecyclerView.Adapter<RecyclerViewJobD
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // grabbing the views from our recycler_view_row layout file (like on create method)
 
-        TextView jobName;
+        TextView jobDemandTitle, jobAvailable;
         public MyViewHolder(@NonNull View itemView, RecyclerViewJobDemandInterface recyclerViewJobDemandInterface) {
             super(itemView);
 
-            jobName = itemView.findViewById(R.id.jobName);
+            jobDemandTitle = itemView.findViewById(R.id.jobDemandTitle);
+            jobAvailable = itemView.findViewById(R.id.jobAvailable);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
