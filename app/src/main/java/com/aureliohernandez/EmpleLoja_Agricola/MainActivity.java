@@ -246,7 +246,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
     }
 
     public void toMyJobOffersActivity(){
-        Intent intent = new Intent(this, MyJobOffers.class);
+        Intent intent = new Intent(this, MyJobs.class);
         startActivity(intent);
         finish();
     }

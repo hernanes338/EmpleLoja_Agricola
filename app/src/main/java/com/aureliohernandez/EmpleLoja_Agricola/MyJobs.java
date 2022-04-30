@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MyJobOffers extends AppCompatActivity {
+public class MyJobs extends AppCompatActivity {
 
     private User user;
     private JobOffer jobOffer;
@@ -45,7 +45,7 @@ public class MyJobOffers extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_job_offers_screen);
+        setContentView(R.layout.activity_my_jobs_screen);
 
         userLocalStore = new UserLocalStore(this);
         user = userLocalStore.getLoggedInUser();

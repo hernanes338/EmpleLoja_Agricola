@@ -30,7 +30,7 @@
             android:name=".MainActivity"
             android:exported="true" />
         <activity
-            android:name=".MyJobOffers"
+            android:name=".MyJobs"
             android:exported="true" />
         <activity
             android:name=".JobOfferDetailsContact"
