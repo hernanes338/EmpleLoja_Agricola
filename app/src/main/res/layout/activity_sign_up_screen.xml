@@ -155,17 +155,15 @@
             android:id="@+id/radioButtonOffer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_marginEnd="5dp"
-
-            android:text="Ofrecer trabajo" />
+            android:text="Ofrecer" />
 
         <RadioButton
             android:id="@+id/radioButtonDemand"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:text="Buscar trabajo" />
+            android:text="Buscar" />
     </RadioGroup>
 
     <Button

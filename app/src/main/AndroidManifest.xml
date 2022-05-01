@@ -33,6 +33,12 @@
             android:name=".MyJobs"
             android:exported="true" />
         <activity
+            android:name=".JobOfferEdit"
+            android:exported="true" />
+        <activity
+            android:name=".JobDemandEdit"
+            android:exported="true" />
+        <activity
             android:name=".JobOfferDetailsContact"
             android:exported="true" />
         <activity
@@ -42,7 +48,6 @@
             android:name=".AddJobOffer"
             android:exported="true"
             android:windowSoftInputMode="stateHidden"/>
-
         <activity
             android:name=".AddJobDemand"
             android:exported="true"

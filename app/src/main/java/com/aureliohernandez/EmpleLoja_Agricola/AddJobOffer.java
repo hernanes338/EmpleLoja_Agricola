@@ -76,7 +76,7 @@ public class AddJobOffer extends AppCompatActivity {
                 endDate = Date.valueOf(endDateField.getText().toString().trim());
 
                 jobOffer = new JobOffer(title, description, user_id, salaryHour, startDate, endDate);
-                addJobDemand();
+                addJobOffer();
 
             }
         });
@@ -94,12 +94,11 @@ public class AddJobOffer extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void addJobDemand() {
-        final String URL_LOGIN = "http://192.168.0.25/EmpleLoja_Agricola/php_scripts/add_job_offers.php";
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_LOGIN, new Response.Listener<String>() {
+    public void addJobOffer() {
+        final String URL_ADD_JOB_OFFER = "http://192.168.0.25/EmpleLoja_Agricola/php_scripts/add_job_offers.php";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_ADD_JOB_OFFER, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("Res: ", response);
                 if (response.equals("success")) {
                     Toast.makeText(getApplicationContext(), "Se ha creado una nueva oferta de trabajo", Toast.LENGTH_SHORT).show();
                     toMainScreen();

@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -31,15 +33,16 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
-public class MyJobs extends AppCompatActivity {
+public class MyJobs extends AppCompatActivity implements RecyclerViewJobOfferInterface, RecyclerViewJobDemandInterface {
 
     private User user;
     private JobOffer jobOffer;
     private JobDemand jobDemand;
     private UserLocalStore userLocalStore;
-    private ArrayList<JobOffer> jobOffers = new ArrayList<JobOffer>();
-    private ArrayList<JobDemand> jobDemands = new ArrayList<JobDemand>();
+    private ArrayList<JobOffer> jobOffers = new ArrayList<>();
+    private ArrayList<JobDemand> jobDemands = new ArrayList<>();
 
 
     @Override
@@ -57,14 +60,38 @@ public class MyJobs extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Mis Trabajos");
 
-        System.out.println("Rol:" +user.getRole_id());
-
         if (user.getRole_id() == 2) {
             fetchMyJobOffers();
         } else if (user.getRole_id() == 3) {
             fetchMyJobDemands();
         }
         else {
+            Toast.makeText(getApplicationContext(), "Tipo de usuario incorrecto", Toast.LENGTH_SHORT).show();
+        }
+
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if(user.getRole_id() == 2) {
+            RecyclerView recyclerView = findViewById(R.id.recyclerView);
+
+            RecyclerViewJobOffer adapter = new RecyclerViewJobOffer(this, jobOffers, this);
+
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        } else if (user.getRole_id() == 3) {
+            RecyclerView recyclerView = findViewById(R.id.recyclerView);
+
+            RecyclerViewJobDemand adapter = new RecyclerViewJobDemand(this, jobDemands, this);
+
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        } else {
             Toast.makeText(getApplicationContext(), "Tipo de usuario incorrecto", Toast.LENGTH_SHORT).show();
         }
     }
@@ -205,5 +232,36 @@ public class MyJobs extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+    @Override
+    public void onItemClick(int position) {
+
+        if (user.getRole_id() == 2) {
+            Intent intent = new Intent (MyJobs.this, JobOfferEdit.class);
+            intent.putExtra("Job_Offer_Id", String.valueOf(jobOffers.get(position).getOffer_id()));
+            intent.putExtra("Title", jobOffers.get(position).getTitle());
+            intent.putExtra("Description", jobOffers.get(position).getDescription());
+            intent.putExtra("Start_Date", String.valueOf(jobOffers.get(position).getStart_date()));
+            intent.putExtra("End_Date", String.valueOf(jobOffers.get(position).getEnd_date()));
+            intent.putExtra("Salary_Hour", String.valueOf(jobOffers.get(position).getSalary_hour()));
+            intent.putExtra("User_id", String.valueOf(jobOffers.get(position).getUser_id()));
+            intent.putExtra("Active", String.valueOf(jobOffers.get(position).getActive()));
+            startActivity(intent);
+
+        } else if (user.getRole_id() == 3) {
+            Intent intent = new Intent (MyJobs.this, JobDemandEdit.class);
+            intent.putExtra("Job_Demand_Id", String.valueOf(jobDemands.get(position).getDemand_id()));
+            intent.putExtra("Title", jobDemands.get(position).getTitle());
+            intent.putExtra("Description", jobDemands.get(position).getDescription());
+            intent.putExtra("Available_From", String.valueOf(jobDemands.get(position).getAvailable_from()));
+            intent.putExtra("User_id", String.valueOf(jobDemands.get(position).getUser_id()));
+            intent.putExtra("Active", String.valueOf(jobDemands.get(position).getActive()));
+
+            startActivity(intent);
+
+        } else {
+            Toast.makeText(getApplicationContext(), "Tipo de usuario incorrecto", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

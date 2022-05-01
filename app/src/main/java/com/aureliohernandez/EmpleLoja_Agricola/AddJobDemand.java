@@ -89,11 +89,10 @@ public class AddJobDemand extends AppCompatActivity {
     }
 
     public void addJobDemand() {
-        final String URL_LOGIN = "http://192.168.0.25/EmpleLoja_Agricola/php_scripts/add_job_demands.php";
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_LOGIN, new Response.Listener<String>() {
+        final String URL_ADD_JOB_DEMAND = "http://192.168.0.25/EmpleLoja_Agricola/php_scripts/add_job_demands.php";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_ADD_JOB_DEMAND, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("Res: ", response);
                 if (response.equals("success")) {
                     Toast.makeText(getApplicationContext(), "Se ha creado una nueva demanda de trabajo", Toast.LENGTH_SHORT).show();
                     toMainScreen();

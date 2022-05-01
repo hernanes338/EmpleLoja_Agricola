@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorPrimary"
+    tools:context=".SignUp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar" />
+
+            <EditText
+                android:id="@+id/editOfferTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/toolbar"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="#30ffffff"
+                android:drawablePadding="20dp"
+                android:hint="Titulo"
+                android:inputType="text"
+                android:padding="20dp"
+                android:textColor="@color/white"
+                android:textColorHint="#D3D3D3" />
+
+            <EditText
+                android:id="@+id/editOfferDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editOfferTitle"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="#30ffffff"
+                android:drawablePadding="20dp"
+                android:hint="Descripcion"
+                android:inputType="textMultiLine"
+                android:padding="20dp"
+                android:textColor="@color/white"
+                android:textColorHint="#D3D3D3" />
+
+            <EditText
+                android:id="@+id/editOfferStartDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editOfferDescription"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="#30ffffff"
+                android:drawablePadding="20dp"
+                android:hint="Fecha de inicio"
+                android:inputType="date"
+                android:padding="20dp"
+                android:textColor="@color/white"
+                android:textColorHint="#D3D3D3" />
+
+            <EditText
+                android:id="@+id/editOfferEndDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editOfferStartDate"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="#30ffffff"
+                android:drawablePadding="20dp"
+                android:hint="Fecha de fin"
+                android:inputType="date"
+                android:padding="20dp"
+                android:textColor="@color/white"
+                android:textColorHint="#D3D3D3" />
+
+            <EditText
+                android:id="@+id/editOfferSalary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editOfferEndDate"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="#30ffffff"
+                android:drawablePadding="20dp"
+                android:hint="Salario/hora"
+                android:inputType="numberDecimal"
+                android:padding="20dp"
+                android:textColor="@color/white"
+                android:textColorHint="#D3D3D3" />
+
+
+            <TextView
+                android:id="@+id/radioButtonActive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editOfferSalary"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="Activo:"
+                android:textAlignment="textStart"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/jobOfferActive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/editOfferUpdateButton"
+                android:layout_below="@+id/editOfferSalary"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_toEndOf="@+id/radioButtonActive"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/editOfferActiveYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="Si"
+                    android:checked="true"/>
+
+                <RadioButton
+                    android:id="@+id/editOfferActiveNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="No" />
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/editOfferUpdateButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/radioButtonActive"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="@color/colorSecondary"
+                android:text="Guardar cambios"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

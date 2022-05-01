@@ -60,12 +60,6 @@ public class JobDemandDetailsContact extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
-        return true;
-    }
-
     // this event will enable the back
     // function to the button on press
     @Override
