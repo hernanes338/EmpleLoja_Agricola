@@ -1,19 +1,26 @@
 package com.aureliohernandez.EmpleLoja_Agricola;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 public class JobDemandDetailsContact extends AppCompatActivity {
+    private static final int REQUEST_CALL = 1;
     private String title, description, availableFrom;
     private ImageButton phoneCallButton, sendSmsButton;
 
@@ -79,7 +86,31 @@ public class JobDemandDetailsContact extends AppCompatActivity {
     }
 
     public void phoneCall () {
+        String number = "667019420";
+        if (number.trim().length() > 0) {
+            if (ContextCompat.checkSelfPermission(JobDemandDetailsContact.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(JobDemandDetailsContact.this,
+                        new String[] {Manifest.permission.CALL_PHONE},REQUEST_CALL);
+            } else {
+                String dial = "tel:" + number;
+                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
+            }
 
+        } else {
+            Toast.makeText(JobDemandDetailsContact.this, "Telefono no disponible.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CALL) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                phoneCall();
+            } else {
+                Toast.makeText(this, "Permiso no concedido.", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     public void sendSms () {
