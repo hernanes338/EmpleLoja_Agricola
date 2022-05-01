@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +27,7 @@ import com.aureliohernandez.EmpleLoja_Agricola.Model.User;
 
 public class JobOfferDetailsContact extends AppCompatActivity {
     private static final int REQUEST_CALL = 1;
+    private static final int REQUEST_SMS = 1;
     private String title, description, startDate, endDate, salaryHour;
     private ImageButton phoneCallButton, sendSmsButton;
 
@@ -98,7 +100,7 @@ public class JobOfferDetailsContact extends AppCompatActivity {
     }
 
     public void phoneCall () {
-        String number = "667019420";
+        String number = "1";
         if (number.trim().length() > 0) {
             if (ContextCompat.checkSelfPermission(JobOfferDetailsContact.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(JobOfferDetailsContact.this,
@@ -126,6 +128,13 @@ public class JobOfferDetailsContact extends AppCompatActivity {
     }
 
     public void sendSms () {
-
+        String smsTo = "1";
+        String jobOfferTitle = "Titulo oferta de trabajo";
+        String smsFrom = "2";
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", smsTo, null));
+        intent.putExtra("sms_body", "Hola! Estoy interesado en la oferta de trabajo " + jobOfferTitle
+                + ". Puede contactar conmigo en el telefono " + smsFrom + ". Saludos!");
+        startActivity(intent);
     }
+
 }
