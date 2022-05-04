@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2022 at 11:55 PM
+-- Generation Time: May 04, 2022 at 11:12 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.28
 
@@ -30,10 +30,10 @@ SET time_zone = "+00:00";
 CREATE TABLE `job_demands` (
   `ID` int(11) NOT NULL,
   `TITLE` varchar(128) NOT NULL,
-  `DESCRIPTION` varchar(128) NOT NULL,
+  `DESCRIPTION` varchar(300) NOT NULL,
   `USER_ID` int(11) NOT NULL,
   `AVAILABLE_FROM` date NOT NULL,
-  `ACTIVE` text NOT NULL DEFAULT 'Y'
+  `ACTIVE` varchar(1) NOT NULL DEFAULT 'Y'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -41,7 +41,10 @@ CREATE TABLE `job_demands` (
 --
 
 INSERT INTO `job_demands` (`ID`, `TITLE`, `DESCRIPTION`, `USER_ID`, `AVAILABLE_FROM`, `ACTIVE`) VALUES
-(1, 'Titulo demanda de trabajo', 'Descripcion demanda de trabajo', 3, '2022-06-01', 'Y');
+(1, 'Titulo demanda de trabajo', 'Descripcion demanda de trabajo', 3, '2020-10-05', 'Y'),
+(2, 'Titulo demanda de trabajo dos', 'Descripcion demanda de trabajo dos', 3, '2022-07-01', 'Y'),
+(3, 'Titulo demanda de trabajo tres', 'Descripcion demanda de trabajo tres', 5, '2022-01-01', 'Y'),
+(4, 'Titulo demanda de trabajo cuatro', 'Descripcion demanda de trabajo cuatro', 5, '2022-02-02', 'Y');
 
 -- --------------------------------------------------------
 
@@ -65,7 +68,10 @@ CREATE TABLE `job_offers` (
 --
 
 INSERT INTO `job_offers` (`ID`, `TITLE`, `DESCRIPTION`, `USER_ID`, `START_DATE`, `END_DATE`, `SALARY_HOUR`, `ACTIVE`) VALUES
-(1, 'Titulo oferta de trabajo', 'Descripcion oferta de trabajo', 2, '2022-06-01', '2022-06-30', 7.5, 'Y');
+(1, 'Titulo oferta de trabajo', 'Descripcion oferta de trabajo', 2, '2020-10-09', '2020-10-08', 10.5, 'Y'),
+(2, 'Titulo oferta de trabajo dos', 'Descripcion de oferta de trabajo dos', 2, '2020-10-09', '2020-10-08', 9.5, 'Y'),
+(3, 'Titulo oferta de trabajo tres', 'Descripcion de oferta de trabajo tres', 4, '2022-05-01', '2022-05-01', 5.5, 'Y'),
+(4, 'Titulo oferta de trabajo cuatro', 'Descripcion oferta de trabajo cuatro', 4, '2022-09-01', '2022-09-30', 7, 'Y');
 
 -- --------------------------------------------------------
 
@@ -110,8 +116,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`USER_ID`, `NAME`, `SURNAME`, `PHONE`, `EMAIL`, `PASSWORD`, `ROLE_ID`) VALUES
 (1, 'Admin', 'Admin', 123456789, 'admin', '21232f297a57a5a743894a0e4a801fc3', 1),
-(2, 'Usuario', 'Ofertante', 123456789, 'usuario_ofertante', '0b6a4bbf52c501be76f61139b3b04ab3', 2),
-(3, 'Usuario', 'Demandante', 123456789, 'usuario_demandante', '173d7a26658653c3fa21b5005c2016e2', 3);
+(2, 'Usuario', 'Ofertante', 123, 'usuario_ofertante', '0b6a4bbf52c501be76f61139b3b04ab3', 2),
+(3, 'Usuario', 'Demandante', 456, 'usuario_demandante', '173d7a26658653c3fa21b5005c2016e2', 3),
+(4, 'Usuario', 'Ofertante Dos', 789, 'usuario_ofertante_dos', 'd694ff21e2ddbb8f11b0a80c48938f25', 2),
+(5, 'Usuario', 'Demandante Dos', 123456789, 'usuario_demandante_dos', '03d307822eb1678885f1e42bf6a27217', 3);
 
 --
 -- Indexes for dumped tables
@@ -155,13 +163,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `job_demands`
 --
 ALTER TABLE `job_demands`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `job_offers`
 --
 ALTER TABLE `job_offers`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -173,7 +181,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `USER_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `USER_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables

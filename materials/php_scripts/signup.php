@@ -18,5 +18,7 @@ if(isset($_POST['name']) && isset($_POST['surname']) && isset($_POST['phone'])&&
     }else{
         echo "success";   
     }
+} else {
+    echo "parameters not set";
 }
 ?>

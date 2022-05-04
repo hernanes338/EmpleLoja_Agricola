@@ -18,5 +18,7 @@ if(isset($_POST['email']) && isset($_POST['password'])){
         // If no record is found, print "failure"
         echo "failure";
     }
+} else {
+    echo "parameters not set";
 }
 ?>

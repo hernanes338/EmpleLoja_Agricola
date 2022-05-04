@@ -160,8 +160,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
                         Date end_date = Date.valueOf(jsonObject.getString("END_DATE"));
                         double salary_hour = Double.parseDouble(jsonObject.getString("SALARY_HOUR"));
                         String active = jsonObject.getString("ACTIVE");
+                        int phone = jsonObject.getInt("PHONE");
 
-                        jobOffer = new JobOffer(id, title, description, user_id, start_date, end_date, salary_hour, active);
+                        jobOffer = new JobOffer(id, title, description, user_id, start_date, end_date, salary_hour, active, phone);
 
                         jobOffers.add(jobOffer);
 
@@ -205,8 +206,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
                         int user_id = jsonObject.getInt("USER_ID");
                         Date available_from = Date.valueOf(jsonObject.getString("AVAILABLE_FROM"));
                         String active = jsonObject.getString("ACTIVE");
+                        int phone = jsonObject.getInt("PHONE");
 
-                        jobDemand = new JobDemand(id, title, description, user_id, available_from, active);
+                        jobDemand = new JobDemand(id, title, description, user_id, available_from, active, phone);
 
                         jobDemands.add(jobDemand);
 
@@ -264,6 +266,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
             intent.putExtra("Available_From", String.valueOf(jobDemands.get(position).getAvailable_from()));
             intent.putExtra("User_id", String.valueOf(jobDemands.get(position).getUser_id()));
             intent.putExtra("Active", String.valueOf(jobDemands.get(position).getActive()));
+            intent.putExtra("Phone", String.valueOf(jobDemands.get(position).getPhone()));
 
             startActivity(intent);
 
@@ -277,6 +280,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
             intent.putExtra("Salary_Hour", String.valueOf(jobOffers.get(position).getSalary_hour()));
             intent.putExtra("User_id", String.valueOf(jobOffers.get(position).getUser_id()));
             intent.putExtra("Active", String.valueOf(jobOffers.get(position).getActive()));
+            intent.putExtra("Phone", String.valueOf(jobOffers.get(position).getPhone()));
             startActivity(intent);
 
         } else {

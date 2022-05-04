@@ -19,15 +19,22 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.aureliohernandez.EmpleLoja_Agricola.Model.User;
+
 public class JobDemandDetailsContact extends AppCompatActivity {
     private static final int REQUEST_CALL = 1;
-    private String title, description, availableFrom;
+    private String title, description, availableFrom, phone;
     private ImageButton phoneCallButton, sendSmsButton;
+    private UserLocalStore userLocalStore;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_demand_details_contact_screen);
+
+        userLocalStore = new UserLocalStore(this);
+        user = userLocalStore.getLoggedInUser();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -38,6 +45,7 @@ public class JobDemandDetailsContact extends AppCompatActivity {
         title = getIntent().getStringExtra("Title");
         description = getIntent().getStringExtra("Description");
         availableFrom = getIntent().getStringExtra("Available_From");
+        phone = getIntent().getStringExtra("Phone");
 
         TextView titleTextView = findViewById(R.id.titletextView);
         TextView descriptionTextView = findViewById(R.id.descriptionTextView);
@@ -86,7 +94,7 @@ public class JobDemandDetailsContact extends AppCompatActivity {
     }
 
     public void phoneCall () {
-        String number = "667019420";
+        String number = phone;
         if (number.trim().length() > 0) {
             if (ContextCompat.checkSelfPermission(JobDemandDetailsContact.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(JobDemandDetailsContact.this,
@@ -114,9 +122,9 @@ public class JobDemandDetailsContact extends AppCompatActivity {
     }
 
     public void sendSms () {
-        String smsTo = "1";
-        String jobDemandTitle = "Titulo demanda de trabajo";
-        String smsFrom = "2";
+        String smsTo = phone;
+        String jobDemandTitle = title;
+        String smsFrom = String.valueOf(userLocalStore.getLoggedInUser().getPhone());
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", smsTo, null));
         intent.putExtra("sms_body", "Hola! Estoy interesado en la demanda de trabajo: " + jobDemandTitle
                 + ".\nPuede contactar conmigo en el telefono " + smsFrom + "\nSaludos!");
