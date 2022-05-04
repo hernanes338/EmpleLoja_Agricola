@@ -118,8 +118,8 @@ public class JobDemandDetailsContact extends AppCompatActivity {
         String jobDemandTitle = "Titulo demanda de trabajo";
         String smsFrom = "2";
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", smsTo, null));
-        intent.putExtra("sms_body", "Hola! Estoy interesado en la demanda de trabajo " + jobDemandTitle
-                + ". Puede contactar conmigo en el telefono " + smsFrom + "\n Saludos!");
+        intent.putExtra("sms_body", "Hola! Estoy interesado en la demanda de trabajo: " + jobDemandTitle
+                + ".\nPuede contactar conmigo en el telefono " + smsFrom + "\nSaludos!");
         startActivity(intent);
     }
 }

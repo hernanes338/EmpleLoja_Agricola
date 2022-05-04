@@ -132,8 +132,8 @@ public class JobOfferDetailsContact extends AppCompatActivity {
         String jobOfferTitle = "Titulo oferta de trabajo";
         String smsFrom = "2";
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", smsTo, null));
-        intent.putExtra("sms_body", "Hola! Estoy interesado en la oferta de trabajo " + jobOfferTitle
-                + ". Puede contactar conmigo en el telefono " + smsFrom + ". Saludos!");
+        intent.putExtra("sms_body", "Hola! Estoy interesado en la oferta de trabajo: " + jobOfferTitle
+                + ".\nPuede contactar conmigo en el telefono " + smsFrom + "\nSaludos!");
         startActivity(intent);
     }
 

@@ -17,6 +17,8 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="35dp"
         android:text="Titulo:"
+        android:textStyle="bold"
+        android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
@@ -27,6 +29,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="35dp"
         android:text="Titulo de la oferta"
+        android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/titleLabelTextView"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
@@ -37,8 +40,10 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="35dp"
         android:text="Descripcion:"
+        android:textStyle="bold"
+        android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleLabelTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/titletextView" />
 
     <TextView
         android:id="@+id/descriptionTextView"
@@ -47,6 +52,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="35dp"
         android:text="Descripcion de la oferta"
+        android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/descriptionLabelTextView"
         app:layout_constraintTop_toBottomOf="@+id/titletextView" />
 
@@ -57,8 +63,10 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="35dp"
         android:text="Fecha de inicio:"
+        android:textStyle="bold"
+        android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionLabelTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/descriptionTextView" />
 
     <TextView
         android:id="@+id/startDateTextView"
@@ -67,18 +75,21 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="35dp"
         android:text="2020-10-10"
+        android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/startDateLabelTextView"
         app:layout_constraintTop_toBottomOf="@+id/descriptionTextView" />
 
     <TextView
-        android:id="@+id/endDateLabeltextView"
+        android:id="@+id/endDateLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="35dp"
         android:text="Fecha de fin:"
+        android:textStyle="bold"
+        android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startDateLabelTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/startDateTextView" />
 
     <TextView
         android:id="@+id/endDateTextView"
@@ -87,7 +98,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="35dp"
         android:text="2020-11-10"
-        app:layout_constraintStart_toEndOf="@+id/endDateLabeltextView"
+        android:textSize="20dp"
+        app:layout_constraintStart_toEndOf="@+id/endDateLabelTextView"
         app:layout_constraintTop_toBottomOf="@+id/startDateTextView" />
 
     <TextView
@@ -97,8 +109,10 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="35dp"
         android:text="Salario/hora:"
+        android:textStyle="bold"
+        android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/endDateLabeltextView" />
+        app:layout_constraintTop_toBottomOf="@+id/endDateTextView" />
 
     <TextView
         android:id="@+id/salaryHourTextView"
@@ -107,6 +121,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="35dp"
         android:text="8.5€"
+        android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/salaryHourLabeltextView"
         app:layout_constraintTop_toBottomOf="@+id/endDateTextView" />
 
@@ -114,13 +129,13 @@
         android:id="@+id/callButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
-        android:layout_marginBottom="68dp"
-        android:minHeight="48dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginBottom="60dp"
+        android:minHeight="100dp"
+        android:minWidth="125dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/smsButton"
-        app:layout_constraintHorizontal_bias="0.028"
         app:layout_constraintStart_toStartOf="parent"
+        android:backgroundTint="@color/colorPrimary"
         app:srcCompat="@drawable/ic_baseline_local_phone_24"
         tools:ignore="SpeakableTextPresentCheck" />
 
@@ -128,11 +143,13 @@
         android:id="@+id/smsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="88dp"
-        android:layout_marginBottom="68dp"
-        android:minHeight="48dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="60dp"
+        android:minWidth="125dp"
+        android:minHeight="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="@color/colorPrimary"
         app:srcCompat="@drawable/ic_baseline_sms_24"
         tools:ignore="SpeakableTextPresentCheck" />
 
