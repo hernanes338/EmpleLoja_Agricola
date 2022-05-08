@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EmpleLojaAgricola">
         <activity
-            android:name=".LogIn"
+            android:name=".Users.LogIn"
             android:exported="true"
             android:windowSoftInputMode="stateHidden"
             android:theme="@style/SplashTheme">
@@ -23,33 +23,33 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SignUp"
+            android:name=".Users.SignUp"
             android:exported="true"
             android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".MainActivity"
             android:exported="true" />
         <activity
-            android:name=".MyJobs"
+            android:name=".Jobs.MyJobs"
             android:exported="true" />
         <activity
-            android:name=".JobOfferEdit"
+            android:name=".Jobs.JobOfferEdit"
             android:exported="true" />
         <activity
-            android:name=".JobDemandEdit"
+            android:name=".Jobs.JobDemandEdit"
             android:exported="true" />
         <activity
-            android:name=".JobOfferDetailsContact"
+            android:name=".Jobs.JobOfferDetailsContact"
             android:exported="true" />
         <activity
-            android:name=".JobDemandDetailsContact"
+            android:name=".Jobs.JobDemandDetailsContact"
             android:exported="true" />
         <activity
-            android:name=".AddJobOffer"
+            android:name=".Jobs.AddJobOffer"
             android:exported="true"
             android:windowSoftInputMode="stateHidden"/>
         <activity
-            android:name=".AddJobDemand"
+            android:name=".Jobs.AddJobDemand"
             android:exported="true"
             android:windowSoftInputMode="stateHidden"/>
     </application>

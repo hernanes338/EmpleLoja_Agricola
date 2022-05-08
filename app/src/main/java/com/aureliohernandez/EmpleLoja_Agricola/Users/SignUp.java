@@ -1,4 +1,4 @@
-package com.aureliohernandez.EmpleLoja_Agricola;
+package com.aureliohernandez.EmpleLoja_Agricola.Users;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,16 +22,20 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import com.aureliohernandez.EmpleLoja_Agricola.Model.User;
+import com.aureliohernandez.EmpleLoja_Agricola.R;
+import com.aureliohernandez.EmpleLoja_Agricola.URLManagement;
 
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @class Clase que permite crear una cuenta de usuario introduciendo valores en todos los campos
+ * mostrados en la vista
+ */
+
 public class SignUp extends AppCompatActivity {
-    // Casa
-    private String URL = "http://192.168.0.25/EmpleLoja_Agricola/php_scripts/signup.php";
-    // Oficina
-    //private String URL = "http://192.168.1.130/EmpleLoja_Agricola/php_scripts/signup.php";
 
     private EditText nameField, surnameField, phoneField, emailField, passwordField, repasswordField;
     private String name, surname, email, password, repassword;
@@ -46,10 +50,12 @@ public class SignUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_screen);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        // Mostrar barra superior
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        // showing the back button in action bar
+        // Mostrar el boton de flecha hacia detras
         actionBar.setDisplayHomeAsUpEnabled(true);
+        // Mostrar texto en la barra superior
         actionBar.setTitle("Introduzca sus datos");
 
         nameField = (EditText) findViewById(R.id.name);
@@ -64,10 +70,9 @@ public class SignUp extends AppCompatActivity {
 
         roleField = (RadioGroup) findViewById(R.id.radioGroupRole);
 
-        roleField.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
+        roleField.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch(checkedId){
+                switch (checkedId) {
                     case R.id.radioButtonOffer:
                         role_id = 2;
                         break;
@@ -93,14 +98,14 @@ public class SignUp extends AppCompatActivity {
                 password = passwordField.getText().toString().trim();
                 repassword = repasswordField.getText().toString().trim();
 
-                if (!name.equals("") && !surname.equals("") && phone != 0 && !email.equals("") && !password.equals("") && !repassword.equals("") && role_id !=0) {
-                    if(!password.equals(repassword)) {
+                if (!name.equals("") && !surname.equals("") && phone != 0 && !email.equals("") && !password.equals("") && !repassword.equals("") && role_id != 0) {
+                    if (!password.equals(repassword)) {
                         Toast.makeText(SignUp.this, "La contraseña no coincide", Toast.LENGTH_SHORT).show();
                     } else {
                         user = new User(name, surname, phone, email, password, role_id);
                         signUp();
                     }
-                } else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
                 }
 
@@ -109,8 +114,8 @@ public class SignUp extends AppCompatActivity {
 
     }
 
-    // this event will enable the back
-    // function to the button on press
+    // El evento de item seleccionado (barra hacia detras) permite volver a la pantalla de login
+    // al  pulsar el boton home (flecha hacia detras)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -121,40 +126,49 @@ public class SignUp extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Metodo que permite crear una cuenta de usuario recogiendo los valores de los campos de la
+     * pantalla.
+     * Si la creacion de la cuenta se lleva a cabo, el usuario vuelve a la pantalla de login
+     */
     public void signUp() {
 
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        if (response.equals("success")) {
-                            Toast.makeText(SignUp.this, "Cuenta de usuario creada", Toast.LENGTH_SHORT).show();
-                            toLogInScreen();
-                        } else if (response.equals("failure")) {
-                            Toast.makeText(SignUp.this, "La cuenta de usuario no ha sido creada", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.toString().trim(), Toast.LENGTH_SHORT).show();
-                    }
-                }){
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> data = new HashMap<>();
-                        data.put("name", user.getName());
-                        data.put("surname", user.getSurname());
-                        data.put("phone", Integer.toString(user.getPhone()));
-                        data.put("email", user.getEmail());
-                        data.put("password", user.getPassword());
-                        data.put("role_id", Integer.toString(user.getRole_id()));
-                        return data;
-                    }
-                };
-                RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-                requestQueue.add(stringRequest);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLManagement.URL_SIGNUP, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.equals("success")) {
+                    Toast.makeText(SignUp.this, "Cuenta de usuario creada", Toast.LENGTH_SHORT).show();
+                    toLogInScreen();
+                } else if (response.equals("failure")) {
+                    Toast.makeText(SignUp.this, "La cuenta de usuario no ha sido creada", Toast.LENGTH_SHORT).show();
+                }
             }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.toString().trim(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> data = new HashMap<>();
+                data.put("name", user.getName());
+                data.put("surname", user.getSurname());
+                data.put("phone", Integer.toString(user.getPhone()));
+                data.put("email", user.getEmail());
+                data.put("password", user.getPassword());
+                data.put("role_id", Integer.toString(user.getRole_id()));
+                return data;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+    }
 
+
+    /**
+     * Metodo que permite volver a la pantalla de login
+     */
     public void toLogInScreen() {
         Intent intent = new Intent(this, LogIn.class);
         startActivity(intent);

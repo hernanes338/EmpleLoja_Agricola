@@ -1,4 +1,4 @@
-package com.aureliohernandez.EmpleLoja_Agricola;
+package com.aureliohernandez.EmpleLoja_Agricola.Jobs;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aureliohernandez.EmpleLoja_Agricola.Model.JobDemand;
+import com.aureliohernandez.EmpleLoja_Agricola.R;
 
 import java.util.ArrayList;
 

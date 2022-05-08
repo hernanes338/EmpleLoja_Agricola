@@ -20,9 +20,20 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import com.aureliohernandez.EmpleLoja_Agricola.Jobs.AddJobDemand;
+import com.aureliohernandez.EmpleLoja_Agricola.Jobs.AddJobOffer;
+import com.aureliohernandez.EmpleLoja_Agricola.Jobs.JobDemandDetailsContact;
+import com.aureliohernandez.EmpleLoja_Agricola.Jobs.JobOfferDetailsContact;
+import com.aureliohernandez.EmpleLoja_Agricola.Jobs.MyJobs;
+import com.aureliohernandez.EmpleLoja_Agricola.Jobs.RecyclerViewJobDemand;
+import com.aureliohernandez.EmpleLoja_Agricola.Jobs.RecyclerViewJobDemandInterface;
+import com.aureliohernandez.EmpleLoja_Agricola.Jobs.RecyclerViewJobOffer;
+import com.aureliohernandez.EmpleLoja_Agricola.Jobs.RecyclerViewJobOfferInterface;
 import com.aureliohernandez.EmpleLoja_Agricola.Model.JobDemand;
 import com.aureliohernandez.EmpleLoja_Agricola.Model.JobOffer;
 import com.aureliohernandez.EmpleLoja_Agricola.Model.User;
+import com.aureliohernandez.EmpleLoja_Agricola.Users.LogIn;
+import com.aureliohernandez.EmpleLoja_Agricola.Users.UserLocalStore;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;

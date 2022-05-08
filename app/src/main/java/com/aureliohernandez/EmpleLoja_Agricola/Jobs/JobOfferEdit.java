@@ -1,8 +1,7 @@
-package com.aureliohernandez.EmpleLoja_Agricola;
+package com.aureliohernandez.EmpleLoja_Agricola.Jobs;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.aureliohernandez.EmpleLoja_Agricola.Model.JobOffer;
-import com.aureliohernandez.EmpleLoja_Agricola.Model.User;
+import com.aureliohernandez.EmpleLoja_Agricola.R;
 
 import java.sql.Date;
 import java.util.HashMap;
@@ -174,13 +173,6 @@ public class JobOfferEdit extends AppCompatActivity {
             RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
             requestQueue.add(stringRequest);
         }
-        /*
-        System.out.println("Job Offer Updated");
-        System.out.println("Usuario ofertante: " + jobOffer.getOffer_id() + "\t" + jobOffer.getTitle() + "\t" + jobOffer.getDescription()
-                + "\t" + jobOffer.getUser_id() + "\t" + jobOffer.getStart_date() + "\t" + jobOffer.getEnd_date()
-                + "\t" + jobOffer.getSalary_hour() + "\t" + jobOffer.getActive());
-
-         */
 
     public void toMyJobs() {
         Intent intent = new Intent(this, MyJobs.class);

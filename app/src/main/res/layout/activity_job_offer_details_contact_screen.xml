@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".JobOfferDetailsContact">
+    tools:context=".Jobs.JobOfferDetailsContact">
 
     <include
         android:id="@+id/toolbar"
@@ -136,7 +136,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:backgroundTint="@color/colorPrimary"
-        app:srcCompat="@drawable/ic_baseline_local_phone_24"
+        app:srcCompat="@drawable/ic_baseline_local_phone_48"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageButton

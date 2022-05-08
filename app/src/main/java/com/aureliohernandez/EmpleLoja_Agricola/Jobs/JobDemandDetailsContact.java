@@ -1,15 +1,12 @@
-package com.aureliohernandez.EmpleLoja_Agricola;
+package com.aureliohernandez.EmpleLoja_Agricola.Jobs;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,13 +18,20 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.aureliohernandez.EmpleLoja_Agricola.Model.JobDemand;
-import com.aureliohernandez.EmpleLoja_Agricola.Model.JobOffer;
+import com.aureliohernandez.EmpleLoja_Agricola.MainActivity;
 import com.aureliohernandez.EmpleLoja_Agricola.Model.User;
+import com.aureliohernandez.EmpleLoja_Agricola.R;
+import com.aureliohernandez.EmpleLoja_Agricola.Users.UserLocalStore;
 
-public class JobOfferDetailsContact extends AppCompatActivity {
+/**
+ * @class
+ * Clase que permite a un ofertante de trabajo visualizar los detalles de una demanda de trabajo
+ * con el fin de contactar con el demandante en caso de estar interesado
+ */
+
+public class JobDemandDetailsContact extends AppCompatActivity {
     private static final int REQUEST_CALL = 1;
-    private String title, description, startDate, endDate, salaryHour, phone;
+    private String title, description, availableFrom, phone;
     private ImageButton phoneCallButton, sendSmsButton;
     private UserLocalStore userLocalStore;
     User user;
@@ -35,8 +39,9 @@ public class JobOfferDetailsContact extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_job_offer_details_contact_screen);
+        setContentView(R.layout.activity_job_demand_details_contact_screen);
 
+        // obtencion de los detalles del usuario logueado
         userLocalStore = new UserLocalStore(this);
         user = userLocalStore.getLoggedInUser();
 
@@ -44,26 +49,20 @@ public class JobOfferDetailsContact extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Detalles de la oferta");
+        actionBar.setTitle("Detalles de la demanda");
 
         title = getIntent().getStringExtra("Title");
         description = getIntent().getStringExtra("Description");
-        startDate = getIntent().getStringExtra("Start_Date");
-        endDate = getIntent().getStringExtra("End_Date");
-        salaryHour = getIntent().getStringExtra("Salary_Hour");
+        availableFrom = getIntent().getStringExtra("Available_From");
         phone = getIntent().getStringExtra("Phone");
 
         TextView titleTextView = findViewById(R.id.titletextView);
         TextView descriptionTextView = findViewById(R.id.descriptionTextView);
-        TextView startDateTextView = findViewById(R.id.startDateTextView);
-        TextView endDateTextView = findViewById(R.id.endDateTextView);
-        TextView salaryHourTextView = findViewById(R.id.salaryHourTextView);
+        TextView startDateTextView = findViewById(R.id.availableFromTextView);
 
         titleTextView.setText(title);
         descriptionTextView.setText(description);
-        startDateTextView.setText(startDate);
-        endDateTextView.setText(endDate);
-        salaryHourTextView.setText(salaryHour);
+        startDateTextView.setText(availableFrom);
 
 
         phoneCallButton = (ImageButton) findViewById(R.id.callButton);
@@ -83,7 +82,6 @@ public class JobOfferDetailsContact extends AppCompatActivity {
                 sendSms ();
             }
         });
-
     }
 
     // this event will enable the back
@@ -98,26 +96,32 @@ public class JobOfferDetailsContact extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Metodo que permite volver a la pantalla principal
+     */
     public void toMainScreen() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
+    /**
+     * Metodo para efectuar una llamada al numer de telefono del usuario creador de la demanda de trabajo
+     */
     public void phoneCall () {
         String number = phone;
         if (number.trim().length() > 0) {
-            if (ContextCompat.checkSelfPermission(JobOfferDetailsContact.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(JobOfferDetailsContact.this,
+            if (ContextCompat.checkSelfPermission(JobDemandDetailsContact.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(JobDemandDetailsContact.this,
                         new String[] {Manifest.permission.CALL_PHONE},REQUEST_CALL);
             } else {
                 String dial = "tel:" + number;
                 startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
             }
 
-    } else {
-        Toast.makeText(JobOfferDetailsContact.this, "Telefono no disponible.", Toast.LENGTH_SHORT).show();
-    }
+        } else {
+            Toast.makeText(JobDemandDetailsContact.this, "Telefono no disponible.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -132,14 +136,18 @@ public class JobOfferDetailsContact extends AppCompatActivity {
         }
     }
 
+    /**
+     * Metodo para abrir la aplicacion de mensajeria por defecto al telefono del usuario creador de la demanda de trabajo
+     * con un texto predeterminado el cual contiene el titulo de la demanda de trabajo a la que se quiere aplicar
+     * y el telefono del usuario que requiere mano de obra
+     */
     public void sendSms () {
         String smsTo = phone;
-        String jobOfferTitle = title;
+        String jobDemandTitle = title;
         String smsFrom = String.valueOf(userLocalStore.getLoggedInUser().getPhone());
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", smsTo, null));
-        intent.putExtra("sms_body", "Hola! Estoy interesado en la oferta de trabajo: " + jobOfferTitle
+        intent.putExtra("sms_body", "Hola! Estoy interesado en la demanda de trabajo: " + jobDemandTitle
                 + ".\nPuede contactar conmigo en el telefono " + smsFrom + "\nSaludos!");
         startActivity(intent);
     }
-
 }

@@ -1,4 +1,4 @@
-package com.aureliohernandez.EmpleLoja_Agricola;
+package com.aureliohernandez.EmpleLoja_Agricola.Jobs;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,7 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.aureliohernandez.EmpleLoja_Agricola.Model.JobDemand;
-import com.aureliohernandez.EmpleLoja_Agricola.Model.JobOffer;
+import com.aureliohernandez.EmpleLoja_Agricola.R;
 
 import java.sql.Date;
 import java.util.HashMap;
