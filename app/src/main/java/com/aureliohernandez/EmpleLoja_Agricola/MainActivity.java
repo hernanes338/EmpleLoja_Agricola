@@ -22,8 +22,8 @@ import com.android.volley.toolbox.Volley;
 
 import com.aureliohernandez.EmpleLoja_Agricola.Jobs.AddJobDemand;
 import com.aureliohernandez.EmpleLoja_Agricola.Jobs.AddJobOffer;
-import com.aureliohernandez.EmpleLoja_Agricola.Jobs.JobDemandDetailsContact;
-import com.aureliohernandez.EmpleLoja_Agricola.Jobs.JobOfferDetailsContact;
+import com.aureliohernandez.EmpleLoja_Agricola.Jobs.DetailsContactJobDemand;
+import com.aureliohernandez.EmpleLoja_Agricola.Jobs.DetailsContactJobOffer;
 import com.aureliohernandez.EmpleLoja_Agricola.Jobs.MyJobs;
 import com.aureliohernandez.EmpleLoja_Agricola.Jobs.RecyclerViewJobDemand;
 import com.aureliohernandez.EmpleLoja_Agricola.Jobs.RecyclerViewJobDemandInterface;
@@ -149,11 +149,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
     }
 
     public void fetchJobOffers() {
-        String URL_FETCH_JOB_OFFERS = "http://192.168.0.25/EmpleLoja_Agricola/php_scripts/fetch_job_offers.php";
+
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_FETCH_JOB_OFFERS, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLManagement.URL_FETCH_JOB_OFFERS, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -197,11 +197,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
     }
 
     public void fetchJobDemands() {
-        String URL_FETCH_JOB_DEMANDS = "http://192.168.0.25/EmpleLoja_Agricola/php_scripts/fetch_job_demands.php";
+
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_FETCH_JOB_DEMANDS, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLManagement.URL_FETCH_JOB_DEMANDS, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
     public void onItemClick(int position) {
 
         if (user.getRole_id() == 2) {
-            Intent intent = new Intent (MainActivity.this, JobDemandDetailsContact.class);
+            Intent intent = new Intent (MainActivity.this, DetailsContactJobDemand.class);
             intent.putExtra("Job_Demand_Id", String.valueOf(jobDemands.get(position).getDemand_id()));
             intent.putExtra("Title", jobDemands.get(position).getTitle());
             intent.putExtra("Description", jobDemands.get(position).getDescription());
@@ -282,7 +282,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
             startActivity(intent);
 
         } else if (user.getRole_id() == 3) {
-            Intent intent = new Intent (MainActivity.this, JobOfferDetailsContact.class);
+            Intent intent = new Intent (MainActivity.this, DetailsContactJobOffer.class);
             intent.putExtra("Job_Offer_Id", String.valueOf(jobOffers.get(position).getOffer_id()));
             intent.putExtra("Title", jobOffers.get(position).getTitle());
             intent.putExtra("Description", jobOffers.get(position).getDescription());

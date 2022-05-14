@@ -26,6 +26,7 @@ import com.aureliohernandez.EmpleLoja_Agricola.Model.JobDemand;
 import com.aureliohernandez.EmpleLoja_Agricola.Model.JobOffer;
 import com.aureliohernandez.EmpleLoja_Agricola.Model.User;
 import com.aureliohernandez.EmpleLoja_Agricola.R;
+import com.aureliohernandez.EmpleLoja_Agricola.URLManagement;
 import com.aureliohernandez.EmpleLoja_Agricola.Users.UserLocalStore;
 
 import org.json.JSONArray;
@@ -112,11 +113,11 @@ public class MyJobs extends AppCompatActivity implements RecyclerViewJobOfferInt
     }
 
     public void fetchMyJobOffers() {
-        String URL_FETCH_MY_JOB_OFFERS = "http://192.168.0.25/EmpleLoja_Agricola/php_scripts/fetch_my_job_offers.php";
+
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_FETCH_MY_JOB_OFFERS, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLManagement.URL_FETCH_MY_JOB_OFFERS, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -172,11 +173,11 @@ public class MyJobs extends AppCompatActivity implements RecyclerViewJobOfferInt
     }
 
     public void fetchMyJobDemands() {
-        String URL_FETCH_MY_JOB_DEMANDS = "http://192.168.0.25/EmpleLoja_Agricola/php_scripts/fetch_my_job_demands.php";
+
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_FETCH_MY_JOB_DEMANDS, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLManagement.URL_FETCH_MY_JOB_DEMANDS, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -240,7 +241,7 @@ public class MyJobs extends AppCompatActivity implements RecyclerViewJobOfferInt
     public void onItemClick(int position) {
 
         if (user.getRole_id() == 2) {
-            Intent intent = new Intent (MyJobs.this, JobOfferEdit.class);
+            Intent intent = new Intent (MyJobs.this, EditJobOffer.class);
             intent.putExtra("Job_Offer_Id", String.valueOf(jobOffers.get(position).getOffer_id()));
             intent.putExtra("Title", jobOffers.get(position).getTitle());
             intent.putExtra("Description", jobOffers.get(position).getDescription());
@@ -252,7 +253,7 @@ public class MyJobs extends AppCompatActivity implements RecyclerViewJobOfferInt
             startActivity(intent);
 
         } else if (user.getRole_id() == 3) {
-            Intent intent = new Intent (MyJobs.this, JobDemandEdit.class);
+            Intent intent = new Intent (MyJobs.this, EditJobDemand.class);
             intent.putExtra("Job_Demand_Id", String.valueOf(jobDemands.get(position).getDemand_id()));
             intent.putExtra("Title", jobDemands.get(position).getTitle());
             intent.putExtra("Description", jobDemands.get(position).getDescription());

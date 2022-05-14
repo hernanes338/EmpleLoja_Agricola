@@ -25,6 +25,7 @@ import com.aureliohernandez.EmpleLoja_Agricola.MainActivity;
 import com.aureliohernandez.EmpleLoja_Agricola.Model.JobOffer;
 import com.aureliohernandez.EmpleLoja_Agricola.Model.User;
 import com.aureliohernandez.EmpleLoja_Agricola.R;
+import com.aureliohernandez.EmpleLoja_Agricola.URLManagement;
 import com.aureliohernandez.EmpleLoja_Agricola.Users.UserLocalStore;
 
 import java.sql.Date;
@@ -105,8 +106,7 @@ public class AddJobOffer extends AppCompatActivity {
      *
      */
     public void addJobOffer() {
-        final String URL_ADD_JOB_OFFER = "http://192.168.0.25/EmpleLoja_Agricola/php_scripts/add_job_offers.php";
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_ADD_JOB_OFFER, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLManagement.URL_ADD_JOB_OFFER, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if (response.equals("success")) {

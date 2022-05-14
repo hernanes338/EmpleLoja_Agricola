@@ -34,16 +34,16 @@
             android:name=".Jobs.MyJobs"
             android:exported="true" />
         <activity
-            android:name=".Jobs.JobOfferEdit"
+            android:name=".Jobs.EditJobOffer"
             android:exported="true" />
         <activity
-            android:name=".Jobs.JobDemandEdit"
+            android:name=".Jobs.EditJobDemand"
             android:exported="true" />
         <activity
-            android:name=".Jobs.JobOfferDetailsContact"
+            android:name=".Jobs.DetailsContactJobOffer"
             android:exported="true" />
         <activity
-            android:name=".Jobs.JobDemandDetailsContact"
+            android:name=".Jobs.DetailsContactJobDemand"
             android:exported="true" />
         <activity
             android:name=".Jobs.AddJobOffer"

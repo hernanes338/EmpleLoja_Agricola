@@ -23,12 +23,13 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.aureliohernandez.EmpleLoja_Agricola.Model.JobDemand;
 import com.aureliohernandez.EmpleLoja_Agricola.R;
+import com.aureliohernandez.EmpleLoja_Agricola.URLManagement;
 
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JobDemandEdit extends AppCompatActivity {
+public class EditJobDemand extends AppCompatActivity {
     private TextView titleTextView, descriptionTextView, availableFromTextView, endDateTextView, salaryTextView;
     private String title, description, availableFrom, active;
     private Button updateButton;
@@ -142,8 +143,8 @@ public class JobDemandEdit extends AppCompatActivity {
     }
 
     public void updateJobDemand() {
-        final String URL_EDIT_JOB_DEMAND = "http://192.168.0.25/EmpleLoja_Agricola/php_scripts/edit_job_demands.php";
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT_JOB_DEMAND, new Response.Listener<String>() {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLManagement.URL_EDIT_JOB_DEMAND, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if (response.equals("success")) {
@@ -156,7 +157,7 @@ public class JobDemandEdit extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(JobDemandEdit.this, error.toString().trim(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditJobDemand.this, error.toString().trim(), Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
