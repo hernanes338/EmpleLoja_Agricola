@@ -14,9 +14,7 @@
     while($row = mysqli_fetch_assoc($result)) {
         $jsonresult[] = $row; 
     }
-    //$jsonresulttitle['users'] = $jsonresult;
-    //print(json_encode($jsonresulttitle));
-
+    
     print(json_encode($jsonresult));
 } else {
     echo "jobs not found";
