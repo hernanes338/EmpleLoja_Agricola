@@ -1,12 +1,25 @@
 package com.aureliohernandez.EmpleLoja_Agricola.Model;
 
+/**
+ * @class Clase que permite crear entidades de tipo Demanda de trabajo
+ */
+
 import java.sql.Date;
 
 public class JobDemand {
-    private int jobDemand_id, user_id, phone;
+    private int jobDemand_id, user_id, phone; // phone deberia ser un objeto de tipo User
     private String title, description, active;
     private Date available_from;
 
+    /**
+     * Constructor para almacenar Demandas de trabajo activas del usuario logueado
+     * @param jobDemand_id
+     * @param title
+     * @param description
+     * @param user_id
+     * @param available_from
+     * @param active
+     */
     public JobDemand(int jobDemand_id, String title, String description, int user_id, Date available_from, String active) {
         this.jobDemand_id = jobDemand_id;
         this.user_id = user_id;
@@ -16,6 +29,17 @@ public class JobDemand {
         this.available_from = available_from;
     }
 
+    /**
+     * Constructor para almacenar Demandas de trabajo activas sacadas de la base de datos
+     * Contienen el telefono del usuario creador para permitir contactar
+     * @param jobDemand_id
+     * @param title
+     * @param description
+     * @param user_id
+     * @param available_from
+     * @param active
+     * @param phone
+     */
     public JobDemand(int jobDemand_id, String title, String description, int user_id, Date available_from, String active, int phone) {
         this.jobDemand_id = jobDemand_id;
         this.user_id = user_id;
@@ -26,6 +50,13 @@ public class JobDemand {
         this.phone = phone;
     }
 
+    /**
+     * Constructor para crear una Demanda de trabajo
+     * @param title
+     * @param description
+     * @param user_id
+     * @param available_from
+     */
     public JobDemand(String title, String description, int user_id, Date available_from) {
         this.title = title;
         this.description = description;

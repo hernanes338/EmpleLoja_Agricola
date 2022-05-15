@@ -102,6 +102,8 @@ public class SignUp extends AppCompatActivity {
                     if (!password.equals(repassword)) {
                         Toast.makeText(SignUp.this, "La contraseña no coincide", Toast.LENGTH_SHORT).show();
                     } else {
+                        // Si todos los campos contienen valores, se crea un objeto de tipo User
+                        // con los valores recogidos de los campos de la vista
                         user = new User(name, surname, phone, email, password, role_id);
                         signUp();
                     }
@@ -127,8 +129,8 @@ public class SignUp extends AppCompatActivity {
     }
 
     /**
-     * Metodo que permite crear una cuenta de usuario recogiendo los valores de los campos de la
-     * pantalla.
+     * Metodo que permite crear una cuenta de usuario recogiendo los valores del objeto de tipo User
+     * creado a traves los campos de la vista
      * Si la creacion de la cuenta se lleva a cabo, el usuario vuelve a la pantalla de login
      */
     public void signUp() {

@@ -15,6 +15,10 @@ public class UserLocalStore {
     public static final String SP_NAME = "userDetails";
     SharedPreferences userLocalDatabase;
 
+    /**
+     * Constructor que inicializa el objeto SharedPreferences
+     * @param context informacion sobre el entorno de la aplicacion
+     */
     public UserLocalStore(Context context) {
         userLocalDatabase = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
     }

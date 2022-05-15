@@ -130,8 +130,8 @@ public class EditJobDemand extends AppCompatActivity {
 
     }
 
-    // this event will enable the back
-    // function to the button on press
+    // El evento de item seleccionado (barra hacia detras) permite volver a la pantalla de login
+    // al  pulsar el boton home (flecha hacia detras)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -148,10 +148,10 @@ public class EditJobDemand extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 if (response.equals("success")) {
-                    Toast.makeText(getApplicationContext(), "Se ha editado la oferta de trabajo", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Se ha editado la demanda de trabajo", Toast.LENGTH_SHORT).show();
                     toMyJobs();
                 } else if (response.equals("failure")) {
-                    Toast.makeText(getApplicationContext(), "La oferta de trabajo no se ha editado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "La oferta de demanda no se ha editado", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {

@@ -58,22 +58,31 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Inicializacion del objeto UserLocalStore con el contexto de la aplicacion
         userLocalStore = new UserLocalStore(this);
+        // Inicializacion del objeto User con los datos guardados en SharedPreferences
         user = userLocalStore.getLoggedInUser();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        // Mostrar barra superior
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
+        // Mostrar texto en la barra superior
         actionBar.setTitle("¡Bienvenido " + user.getName() + "!");
 
-        if(user.getRole_id() == 2) {
+        // Comprobacion del rol del usuario logueado para
+        // obtener la informacion adecuada desde base de datos
+
+        if(user.getRole_id() == 2) { // 2 Usuario Ofertante
             fetchJobDemands();
-        } else if (user.getRole_id() == 3) {
+        } else if (user.getRole_id() == 3) { // 3 Usuario Demandante
             fetchJobOffers();
         } else {
             Toast.makeText(getApplicationContext(), "Tipo de usuario incorrecto", Toast.LENGTH_SHORT).show();
         }
 
+        // Permite obtener los resultados de base de datos
+        // anter de renderizar los elementos de la lista
         try {
             TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {
@@ -98,12 +107,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
             Toast.makeText(getApplicationContext(), "Tipo de usuario incorrecto", Toast.LENGTH_SHORT).show();
         }
 
+        // Crea la barra de navegacion inferior de la vista principal
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
+                    // Funcionalidad de Refrescar la informacion recibida desde base de datos no desarrollada
                     case R.id.refresh:
                         if (user.getRole_id() == 2) {
                             Toast.makeText(getApplicationContext(), "Funcionalidad no disponible", Toast.LENGTH_SHORT).show();
@@ -113,15 +124,18 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
                             Toast.makeText(getApplicationContext(), "Tipo de usuario incorrecto", Toast.LENGTH_SHORT).show();
                         }
                         break;
+                    // Comprobacion del rol del usuario logueado para
+                    // iniciar la Activity adecuada
                     case R.id.addJob:
-                        if (user.getRole_id() == 2) {
+                        if (user.getRole_id() == 2) { // 2 Usuario Ofertante
                             toAddJobOfferActivity();
-                        } else if (user.getRole_id() == 3) {
+                        } else if (user.getRole_id() == 3) { // 3 Usuario Demandante
                             toAddJobDemandActivity();
                         } else {
                             Toast.makeText(getApplicationContext(), "Tipo de usuario incorrecto", Toast.LENGTH_SHORT).show();
                         }
                         break;
+                    // Inicio de la Activity de trabajos creados por el usuario logueado
                     case R.id.myJobs:
                         toMyJobOffersActivity();
                 }
@@ -131,15 +145,19 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
 
     }
 
+    // Muestra el boton de menu de opciones en la barra superior
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         return true;
     }
 
+    // Evalua la opcion seleccionada dentro del menu de opciones
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
+            // Opcion desloguearse deja en blanco el archivo SharedPreferences
+            // y lleva al usuario a la pantalla de log in
             case R.id.logOut:
                 userLocalStore.clearUserData();
                 toLogInActivity();
@@ -148,9 +166,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Metodo que permite almacenar en un array de tipo JobOffer la informacion
+     * de todas las ofertas de trabajo activas existentes en la tabla job_offers
+     */
     public void fetchJobOffers() {
-
-
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URLManagement.URL_FETCH_JOB_OFFERS, new Response.Listener<String>() {
@@ -196,9 +216,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
 
     }
 
+    /**
+     * Metodo que permite almacenar en un array de tipo JobDemand la informacion
+     * de todas las demandas de trabajo activas existentes en la tabla job_demands
+     */
     public void fetchJobDemands() {
-
-
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URLManagement.URL_FETCH_JOB_DEMANDS, new Response.Listener<String>() {
@@ -241,24 +263,36 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
 
     }
 
+    /**
+     * Metodo que permite acceder a la pantalla de log in
+     */
     public void toLogInActivity(){
         Intent intent = new Intent(this, LogIn.class);
         startActivity(intent);
         finish();
     }
 
+    /**
+     * Metodo que permite acceder a la pantalla de anadir ofertas de trabajo
+     */
     public void toAddJobOfferActivity(){
         Intent intent = new Intent(this, AddJobOffer.class);
         startActivity(intent);
         finish();
     }
 
+    /**
+     * Metodo que permite acceder a la pantalla de anadir demandas de trabajo
+     */
     public void toAddJobDemandActivity(){
         Intent intent = new Intent(this, AddJobDemand.class);
         startActivity(intent);
         finish();
     }
 
+    /**
+     * Metodo que permite acceder a la pantalla de trabajos propios
+     */
     public void toMyJobOffersActivity(){
         Intent intent = new Intent(this, MyJobs.class);
         startActivity(intent);

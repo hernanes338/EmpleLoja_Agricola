@@ -1,5 +1,10 @@
 package com.aureliohernandez.EmpleLoja_Agricola.Model;
 
+/**
+ * @class Clase que permite crear entidades de tipo Rol
+ * Actualmente sin uso en la aplicacion
+ */
+
 public class Role {
     int role_id;
     String role_code, role_name;

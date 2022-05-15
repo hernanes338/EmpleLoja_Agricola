@@ -100,8 +100,8 @@ public class MyJobs extends AppCompatActivity implements RecyclerViewJobOfferInt
         }
     }
 
-    // this event will enable the back
-    // function to the button on press
+    // El evento de item seleccionado (barra hacia detras) permite volver a la pantalla de login
+    // al  pulsar el boton home (flecha hacia detras)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

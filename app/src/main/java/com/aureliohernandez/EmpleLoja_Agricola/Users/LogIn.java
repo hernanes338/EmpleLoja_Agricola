@@ -66,6 +66,8 @@ public class LogIn extends AppCompatActivity {
                 email = emailField.getText().toString().trim();
                 password = passwordField.getText().toString().trim();
                 if (!email.equals("") && !password.equals("")) {
+                    // Si todos los campos contienen valores, se crea un objeto de tipo User
+                    // con los valores recogidos de los campos de la vista
                     user = new User(email, password);
                     logIn();
                 } else {
