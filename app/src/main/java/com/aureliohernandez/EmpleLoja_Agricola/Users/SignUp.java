@@ -2,6 +2,7 @@ package com.aureliohernandez.EmpleLoja_Agricola.Users;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +30,7 @@ import com.aureliohernandez.EmpleLoja_Agricola.URLManagement;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * @class Clase que permite crear una cuenta de usuario introduciendo valores en todos los campos
@@ -98,9 +100,18 @@ public class SignUp extends AppCompatActivity {
                 password = passwordField.getText().toString().trim();
                 repassword = repasswordField.getText().toString().trim();
 
-                if (!name.equals("") && !surname.equals("") && phone != 0 && !email.equals("") && !password.equals("") && !repassword.equals("") && role_id != 0) {
+                if (!name.equals("") && !surname.equals("") && phone != 0 && !email.equals("")
+                        && !password.equals("") && !repassword.equals("") && role_id != 0) {
                     if (!password.equals(repassword)) {
                         Toast.makeText(SignUp.this, "La contraseña no coincide", Toast.LENGTH_SHORT).show();
+                    } else if (name.length() > 30) {
+                        Toast.makeText(SignUp.this, "El límite de caracteres del campo Nombre es 30", Toast.LENGTH_SHORT).show();
+                    } else if (surname.length() > 60) {
+                        Toast.makeText(SignUp.this, "El límite de caracteres del campo Apellidos es 60", Toast.LENGTH_SHORT).show();
+                    } else if (!isValidPhone(String.valueOf(phone))) {
+                        Toast.makeText(SignUp.this, "El formato del campo Teléfono no es correcto", Toast.LENGTH_SHORT).show();
+                    } else if (!isValidEmail(email)) {
+                        Toast.makeText(SignUp.this, "El formato del campo Correo Electrónico no es correcto", Toast.LENGTH_SHORT).show();
                     } else {
                         // Si todos los campos contienen valores, se crea un objeto de tipo User
                         // con los valores recogidos de los campos de la vista
@@ -167,6 +178,15 @@ public class SignUp extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    private boolean isValidEmail(String email) {
+        Pattern pattern = Patterns.EMAIL_ADDRESS;
+        return pattern.matcher(email).matches();
+    }
+
+    private boolean isValidPhone(String phone) {
+        String regexStr = "^[0-9]{9}$";
+        return phone.matches(regexStr);
+    }
 
     /**
      * Metodo que permite volver a la pantalla de login
