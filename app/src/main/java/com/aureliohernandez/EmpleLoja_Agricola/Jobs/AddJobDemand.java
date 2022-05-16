@@ -1,10 +1,12 @@
 package com.aureliohernandez.EmpleLoja_Agricola.Jobs;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -29,7 +31,10 @@ import com.aureliohernandez.EmpleLoja_Agricola.URLManagement;
 import com.aureliohernandez.EmpleLoja_Agricola.Users.UserLocalStore;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -48,6 +53,9 @@ public class AddJobDemand extends AppCompatActivity {
     private Button addJobDemandButton;
     private JobDemand jobDemand;
 
+    Calendar calendar;
+    EditText clickedEditText;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,11 +70,11 @@ public class AddJobDemand extends AppCompatActivity {
         userLocalStore = new UserLocalStore(this);
         user = userLocalStore.getLoggedInUser();
 
-        titleField = (EditText) findViewById(R.id.title);
-        descriptionField = (EditText) findViewById(R.id.description);
-        availableFromField = (EditText) findViewById(R.id.availableFromDate);
+        titleField = findViewById(R.id.title);
+        descriptionField = findViewById(R.id.description);
+        availableFromField = findViewById(R.id.availableFromDate);
 
-        addJobDemandButton = (Button) findViewById(R.id.addJobDemandButton);
+        addJobDemandButton = findViewById(R.id.addJobDemandButton);
 
         addJobDemandButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +86,33 @@ public class AddJobDemand extends AppCompatActivity {
 
                 jobDemand = new JobDemand(title, description, user_id, availableFrom);
                 addJobDemand();
+            }
+        });
+
+        calendar = Calendar.getInstance();
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                updateCalendar();
+            }
+
+            private void updateCalendar() {
+                String Format = "yyyy-MM-dd";
+                SimpleDateFormat sdf = new SimpleDateFormat(Format, Locale.ITALY);
+                clickedEditText.setText(sdf.format(calendar.getTime()));
+            }
+        };
+
+        availableFromField.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickedEditText = (EditText) v;
+                new DatePickerDialog(AddJobDemand.this, date, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
     }

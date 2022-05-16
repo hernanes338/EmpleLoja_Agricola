@@ -109,7 +109,7 @@ public class SignUp extends AppCompatActivity {
                     } else if (surname.length() > 60) {
                         Toast.makeText(SignUp.this, "El límite de caracteres del campo Apellidos es 60", Toast.LENGTH_SHORT).show();
                     } else if (!isValidPhone(String.valueOf(phone))) {
-                        Toast.makeText(SignUp.this, "El formato del campo Teléfono no es correcto", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUp.this, "El campo Teléfono debe tener exactamente 9 digitos", Toast.LENGTH_SHORT).show();
                     } else if (!isValidEmail(email)) {
                         Toast.makeText(SignUp.this, "El formato del campo Correo Electrónico no es correcto", Toast.LENGTH_SHORT).show();
                     } else {
