@@ -15,6 +15,7 @@
         android:theme="@style/Theme.EmpleLojaAgricola">
         <activity
             android:name=".Users.LogIn"
+            android:screenOrientation="portrait"
             android:exported="true"
             android:windowSoftInputMode="stateHidden"
             android:theme="@style/SplashTheme">
@@ -25,32 +26,41 @@
         </activity>
         <activity
             android:name=".Users.SignUp"
+            android:screenOrientation="portrait"
             android:exported="true"
             android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".Jobs.MyJobs"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".Jobs.EditJobOffer"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".Jobs.EditJobDemand"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".Jobs.DetailsContactJobOffer"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".Jobs.DetailsContactJobDemand"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".Jobs.AddJobOffer"
+            android:screenOrientation="portrait"
             android:exported="true"
             android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".Jobs.AddJobDemand"
+            android:screenOrientation="portrait"
             android:exported="true"
             android:windowSoftInputMode="stateHidden"/>
     </application>

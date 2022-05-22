@@ -107,9 +107,10 @@ public class LogIn extends AppCompatActivity {
      * y permite al usuario acceder a la seccion principal
      */
     public void logIn() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLManagement.URL_LOGIN, new Response.Listener<String>() {
+        // Peticion de un String desde la URL
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, URLManagement.URL_LOGIN, new Response.Listener<String>() {
             @Override
-            public void onResponse(String response) {
+            public void onResponse(String response) { // En caso de respuesta valida se evalua el String devuelto
                 if (response.equals("success")) {
                     userLocalStore.setUserLoggedIn(true);
                     storeUserDetails();
@@ -131,7 +132,9 @@ public class LogIn extends AppCompatActivity {
                 return data;
             }
         };
+        // Se inicializa el objeto RequestQueue
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        // Se anade la peticion al objeto RequestQueue
         requestQueue.add(stringRequest);
     }
 

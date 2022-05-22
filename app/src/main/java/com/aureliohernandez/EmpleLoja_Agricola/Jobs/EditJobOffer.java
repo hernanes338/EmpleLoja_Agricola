@@ -35,6 +35,12 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * @class Clase que permite a un usuario con rol ofertante visualizar los detalles de una oferta de trabajo
+ * creada por el mismo y editarlos si asi lo desea. Tambien permite la opcion de inactivar permanentemente
+ * la oferta en particular
+ */
+
 public class EditJobOffer extends AppCompatActivity {
     private TextView titleTextView, descriptionTextView, startDateTextView, endDateTextView, salaryTextView;
     private String title, description, startDate, endDate, salary, active;
@@ -51,9 +57,12 @@ public class EditJobOffer extends AppCompatActivity {
         setContentView(R.layout.activity_edit_job_offer_screen);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        // Mostrar barra superior
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
+        // Mostrar el boton de flecha hacia detras
         actionBar.setDisplayHomeAsUpEnabled(true);
+        // Mostrar texto en la barra superior
         actionBar.setTitle("Editar la oferta");
 
         titleTextView = findViewById(R.id.editOfferTitle);
@@ -114,10 +123,9 @@ public class EditJobOffer extends AppCompatActivity {
 
         activeField = (RadioGroup) findViewById(R.id.jobOfferActive);
 
-        activeField.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
+        activeField.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch(checkedId){
+                switch (checkedId) {
                     case R.id.editOfferActiveYes:
                         active = "Y";
                         break;
@@ -164,7 +172,7 @@ public class EditJobOffer extends AppCompatActivity {
                     jobOffer = new JobOffer(jobOffer_id, title, description, user_id, startDate, endDate, salary, active);
                     updateJobOffer();
 
-                } else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
                 }
 
@@ -185,40 +193,50 @@ public class EditJobOffer extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void updateJobOffer() {
+    /**
+     * Metodo que permite editar los detalles de una oferta de trabajo en la base de datos.
+     */
 
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, URLManagement.URL_EDIT_JOB_OFFER, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    if (response.equals("success")) {
-                        Toast.makeText(getApplicationContext(), "Se ha editado la oferta de trabajo", Toast.LENGTH_SHORT).show();
-                        toMyJobs();
-                    } else if (response.equals("failure")) {
-                        Toast.makeText(getApplicationContext(), "La oferta de trabajo no se ha editado", Toast.LENGTH_SHORT).show();
-                    }
+    public void updateJobOffer() {
+        // Peticion de un String desde la URL
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, URLManagement.URL_EDIT_JOB_OFFER, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) { // En caso de respuesta valida se evalua el String devuelto
+                if (response.equals("success")) {
+                    Toast.makeText(getApplicationContext(), "Se ha editado la oferta de trabajo", Toast.LENGTH_SHORT).show();
+                    toMyJobs();
+                } else if (response.equals("failure")) {
+                    Toast.makeText(getApplicationContext(), "La oferta de trabajo no se ha editado", Toast.LENGTH_SHORT).show();
                 }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(EditJobOffer.this, error.toString().trim(), Toast.LENGTH_SHORT).show();
-                }
-            }){
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> data = new HashMap<>();
-                    data.put("job_offer_id", Integer.toString(jobOffer.getOffer_id()));
-                    data.put("title", jobOffer.getTitle());
-                    data.put("description", jobOffer.getDescription());
-                    data.put("start_date", jobOffer.getStart_date().toString());
-                    data.put("end_date", jobOffer.getEnd_date().toString());
-                    data.put("salary_hour", Double.toString(jobOffer.getSalary_hour()));
-                    data.put("active", jobOffer.getActive());
-                    return data;
-                }
-            };
-            RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-            requestQueue.add(stringRequest);
-        }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(EditJobOffer.this, error.toString().trim(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> data = new HashMap<>();
+                data.put("job_offer_id", Integer.toString(jobOffer.getOffer_id()));
+                data.put("title", jobOffer.getTitle());
+                data.put("description", jobOffer.getDescription());
+                data.put("start_date", jobOffer.getStart_date().toString());
+                data.put("end_date", jobOffer.getEnd_date().toString());
+                data.put("salary_hour", Double.toString(jobOffer.getSalary_hour()));
+                data.put("active", jobOffer.getActive());
+                return data;
+            }
+        };
+        // Se inicializa el objeto RequestQueue
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        // Se anade la peticion al objeto RequestQueue
+        requestQueue.add(stringRequest);
+    }
+
+    /**
+     * Metodo que permite volver a la pantalla de Mis Trabajos
+     */
 
     public void toMyJobs() {
         Intent intent = new Intent(this, MyJobs.class);

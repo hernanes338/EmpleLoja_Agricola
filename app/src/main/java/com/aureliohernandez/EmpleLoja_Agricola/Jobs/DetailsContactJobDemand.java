@@ -46,9 +46,12 @@ public class DetailsContactJobDemand extends AppCompatActivity {
         user = userLocalStore.getLoggedInUser();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        // Mostrar barra superior
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
+        // Mostrar el boton de flecha hacia detras
         actionBar.setDisplayHomeAsUpEnabled(true);
+        // Mostrar texto en la barra superior
         actionBar.setTitle("Detalles de la demanda");
 
         title = getIntent().getStringExtra("Title");
@@ -124,6 +127,13 @@ public class DetailsContactJobDemand extends AppCompatActivity {
         }
     }
 
+
+    /**
+     * Gestion del permiso de llamada telefonica
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

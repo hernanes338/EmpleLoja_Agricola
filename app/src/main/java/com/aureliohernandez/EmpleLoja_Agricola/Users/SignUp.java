@@ -145,10 +145,10 @@ public class SignUp extends AppCompatActivity {
      * Si la creacion de la cuenta se lleva a cabo, el usuario vuelve a la pantalla de login
      */
     public void signUp() {
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLManagement.URL_SIGNUP, new Response.Listener<String>() {
+        // Peticion de un String desde la URL
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, URLManagement.URL_SIGNUP, new Response.Listener<String>() {
             @Override
-            public void onResponse(String response) {
+            public void onResponse(String response) { // En caso de respuesta valida se evalua el String devuelto
                 if (response.equals("success")) {
                     Toast.makeText(SignUp.this, "Cuenta de usuario creada", Toast.LENGTH_SHORT).show();
                     toLogInScreen();
@@ -174,7 +174,10 @@ public class SignUp extends AppCompatActivity {
                 return data;
             }
         };
+
+        // Se inicializa el objeto RequestQueue
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        // Se anade la peticion al objeto RequestQueue
         requestQueue.add(stringRequest);
     }
 

@@ -39,7 +39,8 @@ import java.util.Map;
 
 /**
  * @class
- * Clase que permite
+ * Clase que permite a un usuario con rol ofertante anadir una oferta de trabajo
+ * a la base de datos de la aplicacion
  */
 
 public class AddJobOffer extends AppCompatActivity {
@@ -55,17 +56,19 @@ public class AddJobOffer extends AppCompatActivity {
     private JobOffer jobOffer;
 
     Calendar calendar;
-    EditText clickedEditText;
+    EditText clickedEditText; // objeto generico EditText para reutilizar en varios campos
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_job_offer_screen);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        // Mostrar barra superior
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        // showing the back button in action bar
+        // Mostrar el boton de flecha hacia detras
         actionBar.setDisplayHomeAsUpEnabled(true);
+        // Mostrar texto en la barra superior
         actionBar.setTitle("Detalles de la oferta");
 
         userLocalStore = new UserLocalStore(this);
@@ -96,6 +99,7 @@ public class AddJobOffer extends AppCompatActivity {
             }
         });
 
+        // Creacion de calendario para usar en campos de tipo fecha
         calendar = Calendar.getInstance();
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -108,16 +112,16 @@ public class AddJobOffer extends AppCompatActivity {
             }
 
             private void updateCalendar() {
-                String Format = "yyyy-MM-dd";
+                String Format = "yyyy-MM-dd"; // formato del tipo de dato DATE de la base de datos
                 SimpleDateFormat sdf = new SimpleDateFormat(Format, Locale.ITALY);
-                clickedEditText.setText(sdf.format(calendar.getTime()));
+                clickedEditText.setText(sdf.format(calendar.getTime())); // objeto generico EditText
             }
         };
 
         startDateField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickedEditText = (EditText) v;
+                clickedEditText = (EditText) v; // objeto generico EditText
                 new DatePickerDialog(AddJobOffer.this, date, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
@@ -126,7 +130,7 @@ public class AddJobOffer extends AppCompatActivity {
         endDateField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickedEditText = (EditText) v;
+                clickedEditText = (EditText) v; // objeto generico EditText
                 new DatePickerDialog(AddJobOffer.this, date, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
@@ -150,9 +154,10 @@ public class AddJobOffer extends AppCompatActivity {
      *
      */
     public void addJobOffer() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLManagement.URL_ADD_JOB_OFFER, new Response.Listener<String>() {
+        // Peticion de un String desde la URL
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, URLManagement.URL_ADD_JOB_OFFER, new Response.Listener<String>() {
             @Override
-            public void onResponse(String response) {
+            public void onResponse(String response) { // En caso de respuesta valida se evalua el String devuelto
                 if (response.equals("success")) {
                     Toast.makeText(getApplicationContext(), "Se ha creado una nueva oferta de trabajo", Toast.LENGTH_SHORT).show();
                     toMainScreen();
@@ -179,7 +184,10 @@ public class AddJobOffer extends AppCompatActivity {
                 return data;
             }
         };
+
+        // Se inicializa el objeto RequestQueue
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        // Se anade la peticion al objeto RequestQueue
         requestQueue.add(stringRequest);
     }
 

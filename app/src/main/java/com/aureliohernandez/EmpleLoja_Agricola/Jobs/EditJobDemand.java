@@ -35,6 +35,13 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * @class
+ * Clase que permite a un usuario con rol demandante visualizar los detalles de una demanda de trabajo
+ * creada por el mismo y editarlos si asi lo desea. Tambien permite la opcion de inactivar permanentemente
+ * la demanda en particular
+ */
+
 public class EditJobDemand extends AppCompatActivity {
     private TextView titleTextView, descriptionTextView, availableFromTextView, endDateTextView, salaryTextView;
     private String title, description, availableFrom, active;
@@ -51,9 +58,12 @@ public class EditJobDemand extends AppCompatActivity {
         setContentView(R.layout.activity_edit_job_demand_screen);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        // Mostrar barra superior
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
+        // Mostrar el boton de flecha hacia detras
         actionBar.setDisplayHomeAsUpEnabled(true);
+        // Mostrar texto en la barra superior
         actionBar.setTitle("Editar la demanda");
 
         titleTextView = findViewById(R.id.editDemandTitle);
@@ -178,11 +188,16 @@ public class EditJobDemand extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void updateJobDemand() {
+    /**
+     * Metodo que permite editar los detalles de una demanda de trabajo en la base de datos.
+     *
+     */
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLManagement.URL_EDIT_JOB_DEMAND, new Response.Listener<String>() {
+    public void updateJobDemand() {
+        // Peticion de un String desde la URL
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, URLManagement.URL_EDIT_JOB_DEMAND, new Response.Listener<String>() {
             @Override
-            public void onResponse(String response) {
+            public void onResponse(String response) { // En caso de respuesta valida se evalua el String devuelto
                 if (response.equals("success")) {
                     Toast.makeText(getApplicationContext(), "Se ha editado la demanda de trabajo", Toast.LENGTH_SHORT).show();
                     toMyJobs();
@@ -207,9 +222,15 @@ public class EditJobDemand extends AppCompatActivity {
                 return data;
             }
         };
+        // Se inicializa el objeto RequestQueue
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        // Se anade la peticion al objeto RequestQueue
         requestQueue.add(stringRequest);
     }
+
+    /**
+     * Metodo que permite volver a la pantalla de Mis Trabajos
+     */
 
     public void toMyJobs() {
         Intent intent = new Intent(this, MyJobs.class);

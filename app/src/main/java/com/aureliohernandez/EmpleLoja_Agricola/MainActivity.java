@@ -171,9 +171,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
      * de todas las ofertas de trabajo activas existentes en la tabla job_offers
      */
     public void fetchJobOffers() {
+        // Se inicializa el objeto RequestQueue
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLManagement.URL_FETCH_JOB_OFFERS, new Response.Listener<String>() {
+        // Peticion de un String desde la URL
+        final StringRequest stringRequest = new StringRequest(Request.Method.GET, URLManagement.URL_FETCH_JOB_OFFERS, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -192,9 +193,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
                         double salary_hour = Double.parseDouble(jsonObject.getString("SALARY_HOUR"));
                         String active = jsonObject.getString("ACTIVE");
                         int phone = jsonObject.getInt("PHONE");
-
+                        // Creacion del objeto JobDemand
                         jobOffer = new JobOffer(id, title, description, user_id, start_date, end_date, salary_hour, active, phone);
-
+                        // Se anade el objeto anterior al ArrayList de objetos JobOffer
                         jobOffers.add(jobOffer);
 
                     }
@@ -211,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
                 System.out.println("Response failed: " + error);
             }
         });
-
+        // Se anade la peticion al objeto RequestQueue
         requestQueue.add(stringRequest);
 
     }
@@ -221,15 +222,16 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
      * de todas las demandas de trabajo activas existentes en la tabla job_demands
      */
     public void fetchJobDemands() {
+        // Se inicializa el objeto RequestQueue
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-
+        // Peticion de un String desde la URL
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URLManagement.URL_FETCH_JOB_DEMANDS, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
-                    JSONArray jsonArray = new JSONArray(response);
+                    JSONArray jsonArray = new JSONArray(response); // Se crea un array JSON con la respuesta
 
-                    for (int i = 0; i < jsonArray.length(); i++) {
+                    for (int i = 0; i < jsonArray.length(); i++) { // Recorrido por los elementos del array JSON para obtener los atributos
 
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
 
@@ -240,9 +242,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
                         Date available_from = Date.valueOf(jsonObject.getString("AVAILABLE_FROM"));
                         String active = jsonObject.getString("ACTIVE");
                         int phone = jsonObject.getInt("PHONE");
-
+                        // Creacion del objeto JobDemand
                         jobDemand = new JobDemand(id, title, description, user_id, available_from, active, phone);
-
+                        // Se anade el objeto anterior al ArrayList de objetos JobDemand
                         jobDemands.add(jobDemand);
 
                     }
@@ -258,7 +260,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
                 System.out.println("Response failed: " + error);
             }
         });
-
+        // Se anade la peticion al objeto RequestQueue
         requestQueue.add(stringRequest);
 
     }
