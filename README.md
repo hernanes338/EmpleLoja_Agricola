@@ -1,5 +1,16 @@
 # Proyecto EmpleLoja Agrícola
 
+## Nota Importante
+
+Se puede encontrar el archivo .apk resultado del proyecto en la ruta EmpleLoja_Agricola\app\build\outputs\apk\debug. Sin embargo la aplicacion no podra ser utilizada ya que es necesario introducir via codigo la direccion IP de la maquina que ejecutara la aplicacion.
+
+Se recomienda seguir los siguientes pasos para generar el archivo .apk con la IP que permita el correcto funcionamiento de la aplicacion:
+
+1. Editar el archivo URLManagement.java en la ruta EmpleLoja_Agricola\app\src\main\java\com\aureliohernandez\EmpleLoja_Agricola sustituyendo en la linea 11 el valor de la IP por la direccion IP propia
+2. En el IDE Android Studio, en la barra superior hacer clic en Build -> Make Project
+3. Todavia en el IDE Android Studio, Build -> Build Bundle(s) / APK (s) -> Build APK(s)
+4. Una vez generada la APK, en la parte inferior derecha del IDE hacer clic en Locate para abrir la carpeta donde se ha generado el archivo .apk
+
 ## Introduccion
 
 Se trata de un proyecto pensado para solucionar la problemática de la desconexión entre ofertantes y demandantes de empleo en el sector agrario dentro de la comarca de Loja.
