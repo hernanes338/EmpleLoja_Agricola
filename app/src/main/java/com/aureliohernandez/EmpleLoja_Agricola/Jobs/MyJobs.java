@@ -53,26 +53,30 @@ public class MyJobs extends AppCompatActivity implements RecyclerViewJobOfferInt
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_jobs_screen);
-
+        // Inicializacion del objeto UserLocalStore con el contexto de la aplicacion
         userLocalStore = new UserLocalStore(this);
+        // Inicializacion del objeto User con los datos guardados en SharedPreferences
         user = userLocalStore.getLoggedInUser();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        // Mostrar barra superior
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Mis Trabajos");
 
-        if (user.getRole_id() == 2) {
+        if (user.getRole_id() == 2) { // 2 Usuario Ofertante
             fetchMyJobOffers();
-        } else if (user.getRole_id() == 3) {
+        } else if (user.getRole_id() == 3) { // 3 Usuario Demandante
             fetchMyJobDemands();
         }
         else {
             Toast.makeText(getApplicationContext(), "Tipo de usuario incorrecto", Toast.LENGTH_SHORT).show();
         }
 
+        // Permite obtener los resultados de base de datos
+        // anter de renderizar los elementos de la lista
         try {
             TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {
@@ -80,19 +84,23 @@ public class MyJobs extends AppCompatActivity implements RecyclerViewJobOfferInt
         }
 
         if(user.getRole_id() == 2) {
+            // Inicializacion del elemento de la vista RecyclerView
             RecyclerView recyclerView = findViewById(R.id.recyclerView);
-
+            // Asociacion de los datos con las vistas
             RecyclerViewJobOffer adapter = new RecyclerViewJobOffer(this, jobOffers, this);
 
             recyclerView.setAdapter(adapter);
+            // Disposicion de los elementos en una lista unidimensional
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         } else if (user.getRole_id() == 3) {
+            // Inicializacion del elemento de la vista RecyclerView
             RecyclerView recyclerView = findViewById(R.id.recyclerView);
-
+            // Asociacion de los datos con las vistas
             RecyclerViewJobDemand adapter = new RecyclerViewJobDemand(this, jobDemands, this);
 
             recyclerView.setAdapter(adapter);
+            // Disposicion de los elementos en una lista unidimensional
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         } else {

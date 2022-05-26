@@ -88,20 +88,25 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+        // Creamos los adaptadores de datos despues de haber generado el modelo de datos para evitar
+        // pasar un modelo de datos vacio
         if(user.getRole_id() == 2) {
+            // Inicializacion del elemento de la vista RecyclerView
             RecyclerView recyclerView = findViewById(R.id.recyclerView);
-
+            // Asociacion de los datos con las vistas
             RecyclerViewJobDemand adapter = new RecyclerViewJobDemand(this, jobDemands, this);
 
             recyclerView.setAdapter(adapter);
+            // Disposicion de los elementos en una lista unidimensional
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         } else if (user.getRole_id() == 3) {
+            // Inicializacion del elemento de la vista RecyclerView
             RecyclerView recyclerView = findViewById(R.id.recyclerView);
-
+            // Asociacion de los datos con las vistas
             RecyclerViewJobOffer adapter = new RecyclerViewJobOffer(this, jobOffers, this);
 
             recyclerView.setAdapter(adapter);
+            // Disposicion de los elementos en una lista unidimensional
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         } else {
             Toast.makeText(getApplicationContext(), "Tipo de usuario incorrecto", Toast.LENGTH_SHORT).show();
@@ -114,16 +119,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    // Funcionalidad de Refrescar la informacion recibida desde base de datos no desarrollada
-                    case R.id.refresh:
-                        if (user.getRole_id() == 2) {
-                            Toast.makeText(getApplicationContext(), "Funcionalidad no disponible", Toast.LENGTH_SHORT).show();
-                        } else if (user.getRole_id() == 3) {
-                            Toast.makeText(getApplicationContext(), "Funcionalidad no disponible", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Tipo de usuario incorrecto", Toast.LENGTH_SHORT).show();
-                        }
-                        break;
                     // Comprobacion del rol del usuario logueado para
                     // iniciar la Activity adecuada
                     case R.id.addJob:
@@ -301,7 +296,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewJobOf
         finish();
     }
 
-
+    /**
+     * Metodo que recoge los datos que contiene el elemento dentro de la lista y inicia una nueva activity
+     * que mostrara los detalles del objeto contenido en el elemento
+     * @param position posicion del elemento dentro de la lista
+     */
     @Override
     public void onItemClick(int position) {
 

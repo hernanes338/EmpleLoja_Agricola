@@ -18,8 +18,8 @@ public class RecyclerViewJobOffer extends RecyclerView.Adapter<RecyclerViewJobOf
     String euro = "\u20ac";
     private final RecyclerViewJobOfferInterface recyclerViewJobOfferInterface;
 
-    Context context;
-    ArrayList<JobOffer> jobOffers;
+    Context context; // necesario para darle contenido a la vista
+    ArrayList<JobOffer> jobOffers; // contiene el modelo de datos
 
     public RecyclerViewJobOffer (Context context, ArrayList<JobOffer> jobOffers, RecyclerViewJobOfferInterface recyclerViewJobOfferInterface) {
         this.context = context;
@@ -31,7 +31,8 @@ public class RecyclerViewJobOffer extends RecyclerView.Adapter<RecyclerViewJobOf
     @NonNull
     @Override
     public RecyclerViewJobOffer.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Inflate the layout (Giving a look to our rows)
+        // Creacion del aspecto de los elementos
+        // genera la vista de cada elemento
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.recycler_view_row_job_offer, parent, false);
         return new RecyclerViewJobOffer.MyViewHolder(view, recyclerViewJobOfferInterface);
@@ -39,7 +40,8 @@ public class RecyclerViewJobOffer extends RecyclerView.Adapter<RecyclerViewJobOf
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewJobOffer.MyViewHolder holder, int position) {
-        // Assigning values to the views created in the layout file based on the position of the recycler view
+        // Asignar valores a la vistas creadas basadas en la posicion del recycler view
+        // cambiar los datos dependiendo de la posicion del elemento
         holder.jobOfferTitle.setText(jobOffers.get(position).getTitle());
         holder.jobSalary.setText("Salario/hora: " +String.valueOf(jobOffers.get(position).getSalary_hour()) + euro);
         holder.jobStart.setText(String.valueOf("Inicio: " + jobOffers.get(position).getStart_date()));
@@ -47,12 +49,12 @@ public class RecyclerViewJobOffer extends RecyclerView.Adapter<RecyclerViewJobOf
 
     @Override
     public int getItemCount() {
-        // the recycler view wants to know the number of items you want displayed
+        // Obtener el numero de elementos a mostrar en total
         return jobOffers.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        // grabbing the views from our recycler_view_row layout file (like on create method)
+        // Obtener los elementos de la vista del elemento y asignar sus valores a variables
 
         TextView jobOfferTitle, jobSalary, jobStart;
         public MyViewHolder(@NonNull View itemView, RecyclerViewJobOfferInterface recyclerViewJobOfferInterface) {

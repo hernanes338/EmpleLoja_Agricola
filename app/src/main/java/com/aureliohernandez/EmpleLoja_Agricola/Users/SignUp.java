@@ -94,7 +94,11 @@ public class SignUp extends AppCompatActivity {
                 name = nameField.getText().toString().trim();
                 surname = surnameField.getText().toString().trim();
                 if (phoneField.getText().toString().trim().length() > 0) {
-                    phone = Integer.parseInt(phoneField.getText().toString().trim());
+                    if (!isValidPhone(String.valueOf(phone))) {
+                        Toast.makeText(SignUp.this, "El campo Teléfono debe tener exactamente 9 digitos", Toast.LENGTH_SHORT).show();
+                    } else {
+                        phone = Integer.parseInt(phoneField.getText().toString().trim().replace(" ", ""));
+                    }
                 }
                 email = emailField.getText().toString().trim();
                 password = passwordField.getText().toString().trim();
@@ -108,8 +112,6 @@ public class SignUp extends AppCompatActivity {
                         Toast.makeText(SignUp.this, "El límite de caracteres del campo Nombre es 30", Toast.LENGTH_SHORT).show();
                     } else if (surname.length() > 60) {
                         Toast.makeText(SignUp.this, "El límite de caracteres del campo Apellidos es 60", Toast.LENGTH_SHORT).show();
-                    } else if (!isValidPhone(String.valueOf(phone))) {
-                        Toast.makeText(SignUp.this, "El campo Teléfono debe tener exactamente 9 digitos", Toast.LENGTH_SHORT).show();
                     } else if (!isValidEmail(email)) {
                         Toast.makeText(SignUp.this, "El formato del campo Correo Electrónico no es correcto", Toast.LENGTH_SHORT).show();
                     } else {
@@ -181,11 +183,21 @@ public class SignUp extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    /**
+     * Metodo que comprueba que una cadena tenga formato de email
+     * @param email email para comprobar su formato
+     * @return true si la cadena email es realmente un email
+     */
     private boolean isValidEmail(String email) {
         Pattern pattern = Patterns.EMAIL_ADDRESS;
         return pattern.matcher(email).matches();
     }
 
+    /**
+     * Metodo que comprueba si una cadena de texto contiene 9 digitos
+     * @param phone telefono para compbrobar su formato
+     * @return true si el telefono tiene un formato de 9 digitos
+     */
     private boolean isValidPhone(String phone) {
         String regexStr = "^[0-9]{9}$";
         return phone.matches(regexStr);
