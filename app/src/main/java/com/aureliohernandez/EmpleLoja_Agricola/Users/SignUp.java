@@ -94,7 +94,7 @@ public class SignUp extends AppCompatActivity {
                 name = nameField.getText().toString().trim();
                 surname = surnameField.getText().toString().trim();
                 if (phoneField.getText().toString().trim().length() > 0) {
-                    if (!isValidPhone(String.valueOf(phone))) {
+                    if (!isValidPhone(phoneField.getText().toString().trim())) {
                         Toast.makeText(SignUp.this, "El campo Teléfono debe tener exactamente 9 digitos", Toast.LENGTH_SHORT).show();
                     } else {
                         phone = Integer.parseInt(phoneField.getText().toString().trim().replace(" ", ""));
